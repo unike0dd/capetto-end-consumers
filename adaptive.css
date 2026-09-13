@@ -1,0 +1,21 @@
+/* Shared responsive and zoom-reflow layer for storefront and sign-in */
+:root{--viewport-block:100dvh;--adaptive-gap:clamp(.75rem,2vw,1.5rem)}
+html{overflow-x:hidden;text-size-adjust:100%;-webkit-text-size-adjust:100%}
+body{min-width:0;overflow-x:hidden}
+img,svg{max-width:100%}
+button,a,input{min-width:0}
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.bag{display:inline-flex;align-items:center;justify-content:center;gap:.4rem}
+.bag-icon{width:1.35rem;height:1.35rem;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.drawer,.cart-drawer{max-height:var(--viewport-block);max-height:100dvh;overflow:hidden;overscroll-behavior:contain}
+.bag-lines,.cart-lines{min-height:0;overflow-y:auto!important;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-gutter:stable}
+.drawer-head,.drawer-heading,.totals,.checkout,.drawer>.primary,.cart-drawer>.button{flex:0 0 auto}
+@media (max-width:1200px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:900px){.hero{grid-template-columns:1fr}.hero-photo{width:min(100%,38rem);justify-self:center}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.topbar{gap:.75rem}}
+@media (max-width:760px){.drawer,.cart-drawer{inset:0 0 0 auto;width:min(100%,32rem);padding:max(1rem,env(safe-area-inset-top)) max(1rem,env(safe-area-inset-right)) max(1rem,env(safe-area-inset-bottom)) max(1rem,env(safe-area-inset-left))}.bag-lines,.cart-lines{padding-block:.65rem}.topbar{max-width:100%}}
+@media (max-width:480px){.grid{grid-template-columns:1fr}.actions{gap:.3rem}.actions>.plain,.bag{min-height:2.75rem}.hero,.menu{padding-inline:1rem}.drawer,.cart-drawer{width:100%}}
+/* Browser zoom creates a smaller CSS viewport; these rules force clean 250% reflow. */
+@media (max-width:640px){.topbar{grid-template-columns:minmax(0,1fr) auto}.actions{flex-wrap:wrap;justify-content:flex-end}.customer-session{flex-wrap:wrap;justify-content:flex-end}.section-head{align-items:stretch}.filters{max-width:100%}main{min-width:0}.welcome,.panel{min-width:0}.card{max-width:100%}}
+@media (max-width:360px){header{padding-inline:.65rem}.preferences{gap:.3rem}.preferences button{min-height:2.75rem;padding:.45rem .6rem}.hero h1,.welcome h1{font-size:clamp(2.25rem,15vw,3rem)}.card{border-radius:1rem}.options{width:100%}}
+@media (orientation:landscape) and (max-height:600px){.drawer,.cart-drawer{height:100dvh}.welcome,.panel{padding-block:1.25rem}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.drawer,.cart-drawer{transition:none!important}}

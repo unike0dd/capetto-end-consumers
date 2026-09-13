@@ -7,3 +7,8 @@ The interface is designed for mobile, tablet, laptop, desktop, keyboard use, and
 Live site: https://unike0dd.github.io/capetto-end-consumers/
 
 Product source: https://unike0dd.github.io/cappeto/data/products.json
+
+
+## Adaptive interface
+
+The shared `adaptive.css` and `adaptive.js` layer provides responsive reflow for mobile, tablet, laptop, desktop, orientation changes, browser visual viewports, and browser zoom through 250%. The shopping-bag drawer retains fixed actions while its item list scrolls independently on small screens.
