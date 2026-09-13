@@ -26,24 +26,23 @@
 <title>Cappeto · Order your favorites</title>
 <link rel="stylesheet" href="styles.css?v=adaptive-1">
 <link rel="stylesheet" href="adaptive.css?v=adaptive-1">
+<link rel="stylesheet" href="storefront.css?v=consumer-2">
 <script src="adaptive.js?v=adaptive-1" defer></script>
 <script src="app.js?v=adaptive-1" defer></script>
+<script src="storefront.js?v=consumer-2" defer></script>
 </head>
 <body>
 <a class="skip" href="#products">Skip to products</a>
 <header class="topbar">
-  <a class="brand" id="businessBrand" href="#" aria-label="Cappeto home"><span id="businessLogo">C</span><strong id="businessName">Cappeto</strong></a>
-  <label class="search top-search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Search Cappeto" aria-label="Search products"></label>
-  <div class="actions">
-    <a class="plain" id="signInLink" href="login.html" aria-label="Customer sign in">Sign in</a>
-    <div class="customer-session hidden" id="customerSession"><span class="customer-avatar" aria-hidden="true">C</span><span id="customerLabel">Customer</span><button class="plain" id="signOut" type="button">Sign out</button></div>
-    <button class="plain" id="language" type="button" aria-label="Cambiar a español">EN</button>
-    <button class="plain" id="theme" type="button" aria-label="Switch to dark mode">Dark</button>
-    <button class="bag" id="bagButton" type="button" aria-label="Open shopping bag"><svg class="bag-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.8 8.5h10.4l1 11H5.8l1-11Z"/><path d="M9 9V6.8a3 3 0 0 1 6 0V9"/></svg><span class="sr-only">Shopping bag</span><b id="bagCount">0</b></button>
+  <button class="consumer-button" id="consumerButton" type="button" aria-controls="consumerPopover" aria-expanded="false"><span class="customer-avatar" id="consumerAvatar">C</span><span id="customerLabel">Consumer</span></button>
+  <a class="business-title" id="businessBrand" href="#products" aria-label="Cappeto products"><span id="businessLogo">C</span><strong id="businessName">Cappeto</strong></a>
+  <div class="header-fabs">
+    <button class="fab bag" id="bagButton" type="button" aria-label="Open shopping bag"><svg class="bag-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.8 8.5h10.4l1 11H5.8l1-11Z"/><path d="M9 9V6.8a3 3 0 0 1 6 0V9"/></svg><span class="sr-only">Shopping bag</span><b id="bagCount">0</b></button>
+    <button class="fab menu-button" id="menuButton" type="button" aria-label="Open product categories" aria-controls="categoryDrawer" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
+  <div class="consumer-popover" id="consumerPopover" hidden><strong id="consumerEmail">consumer@cappeto.demo</strong><label for="consumerName">Display name</label><input id="consumerName" maxlength="40" autocomplete="name" placeholder="Consumer"><div class="popover-actions"><button id="saveConsumer" type="button">Save</button><button id="useInitial" type="button">Use initial only</button></div></div>
 </header>
 <main>
-  <section class="signed-in-banner hidden" id="signedInBanner" role="status"><strong id="welcomeCustomer">Welcome back.</strong><span id="accountNote">Your customer session is active.</span></section>
   <section class="hero">
     <div>
       <p class="eyebrow" data-copy="eyebrow">YOUR NEIGHBORHOOD CAFÉ</p>
@@ -59,11 +58,10 @@
   <section class="menu" id="products" aria-labelledby="menuTitle">
     <div class="section-head">
       <div><p class="eyebrow" data-copy="menuEyebrow">WHAT ARE YOU CRAVING?</p><h2 id="menuTitle" data-copy="menuTitle">Explore our menu</h2></div>
-      <label class="search mobile-search"><span aria-hidden="true">⌕</span><input id="mobileSearch" type="search" placeholder="Search Cappeto" aria-label="Search products"></label>
+      <label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Search Cappeto" aria-label="Search products"></label>
     </div>
-    <div class="filters" id="filters" role="group" aria-label="Product categories"></div>
     <p class="results" id="results" role="status"></p>
-    <div class="grid" id="grid" aria-live="polite"></div>
+    <div class="carousel-shell"><button class="carousel-arrow previous" id="previousProduct" type="button" aria-label="Previous product">‹</button><div class="grid" id="grid" aria-live="polite" tabindex="0"></div><button class="carousel-arrow next" id="nextProduct" type="button" aria-label="Next product">›</button></div>
   </section>
 </main>
 <aside class="drawer" id="drawer" aria-hidden="true" aria-labelledby="bagTitle">
@@ -72,6 +70,7 @@
   <div class="totals"><p><span data-copy="subtotal">Subtotal</span><b id="subtotal">$0.00</b></p><p><span data-copy="vat">VAT</span><b id="vat">$0.00</b></p><p class="total"><span data-copy="total">Total</span><b id="total">$0.00</b></p></div>
   <button class="primary checkout" id="checkout" data-copy="checkout">Continue to checkout</button>
 </aside>
+<aside class="category-drawer" id="categoryDrawer" aria-hidden="true" aria-labelledby="categoryTitle"><div class="drawer-head"><div><p class="eyebrow">BROWSE</p><h2 id="categoryTitle">Product categories</h2></div><button class="close" id="closeMenu" aria-label="Close categories">×</button></div><nav class="category-list" id="filters" aria-label="Product categories"></nav><div class="menu-preferences"><button class="plain" id="language" type="button">EN</button><button class="plain" id="theme" type="button">Dark</button><a class="plain hidden" id="signInLink" href="login.html">Sign in</a><button class="plain" id="signOut" type="button">Sign out</button></div></aside>
 <div class="scrim" id="scrim"></div>
 <div class="toast" id="toast" role="status"></div>
 <footer><a class="brand footer-brand" href="#"><span id="footerBusinessLogo">C</span><strong id="footerBusinessName">Cappeto</strong></a><p id="businessContact" data-copy="footer">Freshly prepared café favorites.</p><small>© 2026 Cappeto</small></footer>
