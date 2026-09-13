@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f7f4eb">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Sign in to your Cappeto customer account to continue your café experience.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://unike0dd.github.io/capetto-end-consumers/login.html">
+<title>Cappeto · Customer sign in</title>
+<link rel="stylesheet" href="login.css">
+<script src="login.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#loginCard" data-i18n="skip">Skip to sign in</a>
+<header>
+<a class="brand" href="./" aria-label="Cappeto home"><span>C</span><strong>Cappeto</strong></a>
+<div class="preferences" aria-label="Display preferences">
+<button id="language" type="button" aria-pressed="false" aria-label="Cambiar a español">EN / ES</button>
+<button id="theme" type="button" aria-pressed="false" aria-label="Switch to dark mode">LIGHT / DARK</button>
+</div>
+</header>
+<main>
+<section class="welcome" aria-labelledby="welcomeTitle">
+<p class="eyebrow" data-i18n="eyebrow">WELCOME BACK</p>
+<h1 id="welcomeTitle" data-i18n="welcome">Your Cappeto favorites are waiting.</h1>
+<p data-i18n="welcomeCopy">Sign in to review your bag, save favorites, and enjoy a quicker checkout when customer accounts become available.</p>
+<div class="photo"><img src="https://unike0dd.github.io/cappeto/assets/products/04-cappeto-cafe-mocha.webp" alt="Cappeto café mocha" fetchpriority="high"></div>
+</section>
+<section class="panel">
+<form class="card" id="loginCard" novalidate>
+<div class="heading"><p class="eyebrow" data-i18n="account">CUSTOMER ACCOUNT</p><h2 data-i18n="signIn">Sign in</h2><p data-i18n="instruction">Enter the email and password connected to your account.</p></div>
+<label><span data-i18n="email">Email address</span><input id="email" name="email" type="email" autocomplete="username" inputmode="email" required placeholder="you@example.com"></label>
+<label><span data-i18n="password">Password</span><span class="password"><input id="password" name="password" type="password" autocomplete="current-password" minlength="8" required placeholder="Enter your password"><button id="showPassword" type="button" data-i18n="show" aria-label="Show password">Show</button></span></label>
+<div class="options"><label class="remember"><input id="remember" type="checkbox"> <span data-i18n="remember">Remember me</span></label><button class="text" id="forgot" type="button" data-i18n="forgot">Forgot password?</button></div>
+<p class="message" id="message" role="status" aria-live="polite"></p>
+<button class="primary" type="submit" data-i18n="continue">Continue</button>
+<div class="divider"><span data-i18n="or">or</span></div>
+<button class="secondary" id="create" type="button" data-i18n="create">Create a customer account</button>
+<p class="browse"><span data-i18n="noAccount">Just browsing?</span> <a href="./" data-i18n="menu">Continue to the menu</a></p>
+</form>
+</section>
+</main>
+<footer><span>© 2026 Cappeto</span><a href="./" data-i18n="back">Back to menu</a></footer>
+</body></html>
