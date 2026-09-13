@@ -38,7 +38,7 @@
   <a class="business-title" href="#products" aria-label="Cappeto products"><span>C</span><strong>Cappeto</strong></a>
   <div class="header-fabs">
     <button class="fab bag" id="bagButton" type="button" aria-label="Open shopping bag"><svg class="bag-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.8 8.5h10.4l1 11H5.8l1-11Z"/><path d="M9 9V6.8a3 3 0 0 1 6 0V9"/></svg><span class="sr-only">Shopping bag</span><b id="bagCount">0</b></button>
-    <button class="fab menu-button" id="menuButton" type="button" aria-label="Open product categories" aria-controls="categoryDrawer" aria-expanded="false"><span></span><span></span><span></span></button>
+    <button class="fab menu-button" id="menuButton" type="button" aria-label="Open product categories" aria-controls="categoryDrawer" aria-expanded="false"><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span><span class="sr-only">Product menu</span></button>
   </div>
   <div class="consumer-popover" id="consumerPopover" hidden><strong id="consumerEmail">consumer@cappeto.demo</strong><label for="consumerName">Display name</label><input id="consumerName" maxlength="40" autocomplete="name" placeholder="Consumer"><div class="popover-actions"><button id="saveConsumer" type="button">Save</button><button id="useInitial" type="button">Use initial only</button></div></div>
 </header>
@@ -70,7 +70,7 @@
   <div class="totals"><p><span data-copy="subtotal">Subtotal</span><b id="subtotal">$0.00</b></p><p class="total"><span data-copy="total">Total</span><b id="total">$0.00</b></p></div>
   <button class="primary checkout" id="checkout" data-copy="checkout">Continue to checkout</button>
 </aside>
-<aside class="category-drawer" id="categoryDrawer" aria-hidden="true" aria-labelledby="categoryTitle"><div class="drawer-head"><div><p class="eyebrow">BROWSE</p><h2 id="categoryTitle">Product categories</h2></div><button class="close" id="closeMenu" aria-label="Close categories">×</button></div><nav class="category-list" id="filters" aria-label="Product categories"></nav><div class="menu-preferences"><button class="plain" id="language" type="button">EN</button><button class="plain" id="theme" type="button">Dark</button><a class="plain hidden" id="signInLink" href="login.html">Sign in</a><button class="plain" id="signOut" type="button">Sign out</button></div></aside>
+<aside class="category-drawer" id="categoryDrawer" aria-hidden="true" aria-labelledby="categoryTitle"><div class="drawer-head"><div><p class="eyebrow" id="browseLabel">BROWSE</p><h2 id="categoryTitle">Product categories</h2></div><button class="close" id="closeMenu" aria-label="Close categories">×</button></div><nav class="category-list" id="filters" aria-label="Product categories"></nav><div class="menu-preferences"><button class="preference-toggle" id="language" type="button" aria-pressed="false"><span id="languageLabel">Language</span><strong>EN</strong></button><button class="preference-toggle" id="theme" type="button" aria-pressed="false"><span id="themeLabel">Theme</span><strong>Dark</strong></button><a class="plain hidden" id="signInLink" href="login.html">Sign in</a><button class="plain" id="signOut" type="button">Sign out</button></div></aside>
 <div class="scrim" id="scrim"></div>
 <div class="toast" id="toast" role="status"></div>
 <footer><a class="brand footer-brand" href="#"><span>C</span><strong>Cappeto</strong></a><p data-copy="footer">Freshly prepared café favorites.</p><small>© 2026 Cappeto</small></footer>
