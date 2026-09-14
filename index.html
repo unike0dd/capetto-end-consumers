@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://unike0dd.github.io data:; connect-src 'self' https://unike0dd.github.io; script-src 'self'; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#f5f2e8">
 <meta name="application-name" content="Cappeto Consumer">
 <meta name="author" content="Cappeto">
@@ -26,11 +28,11 @@
 <title>Cappeto · Order your favorites</title>
 <link rel="stylesheet" href="styles.css?v=layout-7">
 <link rel="stylesheet" href="adaptive.css?v=layout-7">
-<link rel="stylesheet" href="storefront.css?v=controls-14">
+<link rel="stylesheet" href="storefront.css?v=auth-boundary-15">
 <link rel="stylesheet" href="splash.css?v=reflow-13">
 <script src="adaptive.js?v=layout-7" defer></script>
-<script src="app.js?v=personal-11" defer></script>
-<script src="storefront.js?v=configuration-12" defer></script>
+<script src="app.js?v=auth-boundary-15" defer></script>
+<script src="storefront.js?v=auth-boundary-15" defer></script>
 <script src="splash.js?v=reflow-13" defer></script>
 </head>
 <body>
@@ -66,14 +68,21 @@
   </section>
 </div>
 <header class="topbar">
-  <span class="header-spacer" aria-hidden="true"></span>
-  <strong class="consumer-title" id="customerLabel">Consumer</strong>
+  <div class="public-auth-actions" id="publicAuthActions"><a class="plain" href="login.html">Sign in</a></div>
+  <strong class="public-brand" id="publicBrand">Cappeto</strong>
+  <strong class="consumer-title auth-private" id="customerLabel" hidden></strong>
   <div class="header-fabs">
     <button class="fab bag" id="bagButton" type="button" aria-label="Open shopping bag"><svg class="bag-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.8 8.5h10.4l1 11H5.8l1-11Z"/><path d="M9 9V6.8a3 3 0 0 1 6 0V9"/></svg><span class="sr-only">Shopping bag</span><b id="bagCount">0</b></button>
-    <button class="fab settings-button" id="menuButton" type="button" aria-label="Open configuration" aria-controls="categoryDrawer" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6 1.7 1.7 0 0 0-.4 1.1V21H9.6v-.1A1.7 1.7 0 0 0 8.5 19.4a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-.6-1 1.7 1.7 0 0 0-1.1-.4H3V9.6h.1A1.7 1.7 0 0 0 4.6 8.5a1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.83-2.83.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-.6 1.7 1.7 0 0 0 .4-1.1V3h4v.1A1.7 1.7 0 0 0 15.5 4.6a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 19.4 9c.38.25.7.6.88 1 .14.32.2.68.2 1.03V13c0 .35-.07.7-.2 1.03-.18.4-.5.75-.88.97Z"/></svg><span class="sr-only">Configuration</span></button>
+    <button class="fab settings-button auth-private" id="menuButton" hidden type="button" aria-label="Open configuration" aria-controls="categoryDrawer" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6 1.7 1.7 0 0 0-.4 1.1V21H9.6v-.1A1.7 1.7 0 0 0 8.5 19.4a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-.6-1 1.7 1.7 0 0 0-1.1-.4H3V9.6h.1A1.7 1.7 0 0 0 4.6 8.5a1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.83-2.83.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-.6 1.7 1.7 0 0 0 .4-1.1V3h4v.1A1.7 1.7 0 0 0 15.5 4.6a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 19.4 9c.38.25.7.6.88 1 .14.32.2.68.2 1.03V13c0 .35-.07.7-.2 1.03-.18.4-.5.75-.88.97Z"/></svg><span class="sr-only">Configuration</span></button>
   </div>
 </header>
-<main>
+<section class="public-landing" id="publicLanding" aria-labelledby="publicLandingTitle">
+  <p class="eyebrow">WELCOME TO CAPPETO</p>
+  <h1 id="publicLandingTitle">Fresh café favorites, ready when you are.</h1>
+  <p>Browse the menu freely. Sign in when you are ready to manage your personal settings and continue your customer experience.</p>
+  <div class="public-landing-actions"><a class="primary" href="login.html">Sign in</a><a class="plain" href="login.html#register">Create account</a></div>
+</section>
+<main id="storefrontContent">
   <section class="menu" id="products" aria-labelledby="carouselLabel">
     <div class="section-head">
       <p class="eyebrow carousel-label" id="carouselLabel" data-copy="eyebrow">YOUR NEIGHBORHOOD CAFÉ</p>
@@ -89,7 +98,7 @@
   <div class="totals"><p><span data-copy="subtotal">Subtotal</span><b id="subtotal">$0.00</b></p><p class="total"><span data-copy="total">Total</span><b id="total">$0.00</b></p></div>
   <button class="primary checkout" id="checkout" data-copy="checkout">Continue to checkout</button>
 </aside>
-<aside class="category-drawer settings-drawer" id="categoryDrawer" aria-hidden="true" aria-labelledby="categoryTitle">
+<aside class="category-drawer settings-drawer auth-private" id="categoryDrawer" hidden aria-hidden="true" aria-labelledby="categoryTitle">
   <div class="drawer-head"><div><p class="eyebrow" id="browseLabel">ACCOUNT</p><h1 id="categoryTitle">Configuration</h1></div><button class="close" id="closeMenu" aria-label="Close configuration">×</button></div>
   <form class="settings-form" id="settingsForm">
     <section class="settings-section" aria-labelledby="categoryTitle">
