@@ -27,23 +27,39 @@
 <link rel="stylesheet" href="styles.css?v=layout-7">
 <link rel="stylesheet" href="adaptive.css?v=layout-7">
 <link rel="stylesheet" href="storefront.css?v=onboarding-8">
-<link rel="stylesheet" href="splash.css?v=onboarding-9">
+<link rel="stylesheet" href="splash.css?v=onboarding-10">
 <script src="adaptive.js?v=layout-7" defer></script>
 <script src="app.js?v=layout-7" defer></script>
 <script src="storefront.js?v=onboarding-8" defer></script>
-<script src="splash.js?v=onboarding-9" defer></script>
+<script src="splash.js?v=onboarding-10" defer></script>
 </head>
 <body>
 <a class="skip" href="#products">Skip to products</a>
 <div class="splash-screen" id="splashScreen" aria-hidden="true" hidden>
   <div class="splash-grid" id="splashGrid" aria-hidden="true"></div>
-  <div class="splash-preferences" aria-label="Welcome preferences"><button id="splashLanguage" type="button" aria-label="Cambiar a español">EN</button><button id="splashTheme" type="button" aria-label="Switch to dark mode">Dark</button></div>
   <section class="splash-welcome" id="splashWelcome" role="status" aria-live="polite">
     <p class="splash-thanks">Thank you for choosing Cappeto,</p>
     <p class="splash-kicker">A little joy,</p><h1>MADE FRESH</h1>
     <p class="splash-copy">Coffee; something sweet, or a satisfying bite—find your favorite and make it yours.</p>
     <h2>WHAT ARE YOU CRAVING?</h2><p class="splash-menu">Explore our menu</p>
-    <button class="splash-cta" id="exploreSplash" type="button">Explore the menu</button>
+    <div class="splash-preferences" aria-label="Welcome preferences">
+      <fieldset class="splash-choice">
+        <legend id="splashLanguageLegend">Choose your language</legend>
+        <div class="splash-choice-options">
+          <button type="button" data-splash-language="en" aria-pressed="false">English</button>
+          <button type="button" data-splash-language="es" aria-pressed="false">Español</button>
+        </div>
+      </fieldset>
+      <fieldset class="splash-choice">
+        <legend id="splashThemeLegend">Choose your theme</legend>
+        <div class="splash-choice-options">
+          <button type="button" data-splash-theme="light" aria-pressed="false">Light</button>
+          <button type="button" data-splash-theme="dark" aria-pressed="false">Dark</button>
+        </div>
+      </fieldset>
+    </div>
+    <p class="splash-choice-hint" id="splashChoiceHint">Choose a language and theme to continue.</p>
+    <button class="splash-cta" id="exploreSplash" type="button" aria-describedby="splashChoiceHint" disabled>Explore the menu</button>
     <p class="splash-greeting">Welcome back, <strong id="splashConsumer">Consumer</strong>.</p>
   </section>
   <button class="splash-skip" id="skipSplash" type="button">Skip welcome</button>
