@@ -39,8 +39,9 @@ renderProducts=function(){
   requestAnimationFrame(updateCarouselButtons);
 };
 document.getElementById("grid").addEventListener("click",event=>{const remove=event.target.closest("[data-remove]");if(remove&&bag[remove.dataset.remove]){bag[remove.dataset.remove]--;if(bag[remove.dataset.remove]<=0)delete bag[remove.dataset.remove];saveBag()}});
-document.getElementById("previousProduct").onclick=()=>moveProduct(-1);
-document.getElementById("nextProduct").onclick=()=>moveProduct(1);
+function activateChevron(button,direction){button.classList.remove("is-clicked");void button.offsetWidth;button.classList.add("is-clicked");moveProduct(direction);setTimeout(()=>button.classList.remove("is-clicked"),420)}
+document.getElementById("previousProduct").onclick=event=>activateChevron(event.currentTarget,-1);
+document.getElementById("nextProduct").onclick=event=>activateChevron(event.currentTarget,1);
 document.getElementById("grid").addEventListener("scroll",updateCarouselButtons,{passive:true});
 document.getElementById("grid").addEventListener("keydown",event=>{if(event.key==="ArrowLeft")moveProduct(-1);if(event.key==="ArrowRight")moveProduct(1)});
 document.getElementById("menuButton").onclick=()=>setPanel("menu",document.getElementById("menuButton").getAttribute("aria-expanded")!=="true");
@@ -65,7 +66,7 @@ function syncPreferences(){
   document.getElementById("closeMenu").setAttribute("aria-label",es?"Cerrar categorías":"Close categories");
   document.getElementById("menuButton").setAttribute("aria-label",es?"Abrir categorías de productos":"Open product categories");
 }
-document.getElementById("language").onclick=()=>{language=language==="en"?"es":"en";localStorage.setItem("cappeto-language",language);setLanguage();paintBusiness();syncPreferences()};
+document.getElementById("language").onclick=()=>{language=language==="en"?"es":"en";localStorage.setItem("cappeto-language",language);setLanguage();syncPreferences()};
 document.getElementById("theme").onclick=()=>{setTheme(document.documentElement.dataset.theme==="dark"?"light":"dark");syncPreferences()};
 document.addEventListener("click",event=>{const pop=document.getElementById("consumerPopover");if(!pop.hidden&&!event.target.closest("#consumerPopover")&&!event.target.closest("#consumerButton")){pop.hidden=true;document.getElementById("consumerButton").setAttribute("aria-expanded","false")}});
 document.addEventListener("keydown",event=>{if(event.key==="Escape"){setPanel("menu",false);setPanel("bag",false);document.getElementById("consumerPopover").hidden=true}});
