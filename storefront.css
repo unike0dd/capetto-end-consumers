@@ -165,3 +165,88 @@ main{padding-top:0}.intro-banner{max-width:1500px;margin:0 auto;display:grid;gri
  .public-brand{max-width:30vw;overflow:hidden;text-overflow:ellipsis}
  .public-landing{padding-block:2.5rem}
 }
+
+/* Signed-in product viewport composition */
+#publicLanding[hidden]+#storefrontContent .menu{
+  min-height:calc(100svh - 5.25rem);
+  padding:clamp(.6rem,1.5vh,1rem) clamp(1rem,4vw,4.5rem) 1rem;
+}
+#publicLanding[hidden]+#storefrontContent .section-head{
+  align-items:center;
+  min-height:3rem;
+}
+#publicLanding[hidden]+#storefrontContent .section-head .search{
+  margin:0;
+}
+#publicLanding[hidden]+#storefrontContent .results{
+  margin:.25rem auto .45rem;
+}
+#publicLanding[hidden]+#storefrontContent .grid{
+  padding-top:.35rem;
+  padding-right:max(7.5%,calc((100% - 52rem)/2));
+  padding-bottom:.5rem;
+  padding-left:max(7.5%,calc((100% - 52rem)/2));
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+}
+#publicLanding[hidden]+#storefrontContent .grid::-webkit-scrollbar{
+  display:none;
+  width:0;
+  height:0;
+}
+#publicLanding[hidden]+#storefrontContent .card{
+  height:min(48rem,max(19rem,calc(100svh - 12rem)));
+  max-height:calc(100svh - 10rem);
+}
+#publicLanding[hidden]+#storefrontContent .picture{
+  flex:1 1 auto;
+  width:100%;
+  height:auto;
+  min-height:0;
+}
+#publicLanding[hidden]+#storefrontContent .picture img{
+  object-position:center;
+}
+#publicLanding[hidden]+#storefrontContent .card-body{
+  flex:0 0 auto;
+}
+@media(max-height:700px) and (min-width:761px){
+  #publicLanding[hidden]+#storefrontContent .menu{padding-top:.45rem}
+  #publicLanding[hidden]+#storefrontContent .section-head{min-height:2.65rem}
+  #publicLanding[hidden]+#storefrontContent .results{margin-block:.15rem .3rem}
+  #publicLanding[hidden]+#storefrontContent .card{height:max(18rem,calc(100svh - 10.5rem))}
+  #publicLanding[hidden]+#storefrontContent .card-body{padding:.7rem 1rem}
+  #publicLanding[hidden]+#storefrontContent .description{display:none}
+}
+@media(max-width:760px){
+  #publicLanding[hidden]+#storefrontContent .menu{
+    min-height:calc(100svh - 4.5rem);
+    padding:.55rem .55rem .75rem;
+  }
+  #publicLanding[hidden]+#storefrontContent .section-head{
+    gap:.45rem;
+    min-height:0;
+  }
+  #publicLanding[hidden]+#storefrontContent .section-head .search{
+    margin:0;
+    min-height:2.65rem;
+  }
+  #publicLanding[hidden]+#storefrontContent .results{margin:.2rem 0 .35rem}
+  #publicLanding[hidden]+#storefrontContent .grid{
+    padding:.25rem .35rem .4rem;
+    scroll-padding-inline:.35rem;
+  }
+  #publicLanding[hidden]+#storefrontContent .card{
+    height:auto;
+    max-height:none;
+  }
+  #publicLanding[hidden]+#storefrontContent .picture{
+    flex:none;
+    height:clamp(12rem,calc(100svh - 21rem),26rem);
+  }
+}
+@media(max-width:430px){
+  #publicLanding[hidden]+#storefrontContent .menu{padding-inline:.4rem}
+  #publicLanding[hidden]+#storefrontContent .section-head .carousel-label{font-size:.68rem}
+  #publicLanding[hidden]+#storefrontContent .card-body{min-height:5.25rem;padding:.55rem .65rem .65rem}
+}
