@@ -1,6 +1,23 @@
 const DEMO_SESSION_KEY="cappeto_consumer_demo_session";
-function customerSignedIn(){return sessionStorage.getItem(DEMO_SESSION_KEY)==="active"||localStorage.getItem(DEMO_SESSION_KEY)==="active"}
-function updateCustomerSession(){const active=customerSignedIn(),es=language==="es";document.getElementById("signInLink")?.classList.toggle("hidden",active);document.getElementById("signOut")?.classList.toggle("hidden",!active);if(!localStorage.getItem("cappeto_consumer_name"))document.getElementById("customerLabel").textContent=es?"Consumidor":"Consumer"}
+function customerSignedIn(){return sessionStorage.getItem(DEMO_SESSION_KEY)==="active"}
+function updateCustomerSession(){
+  const active=customerSignedIn(),es=language==="es";
+  document.getElementById("signInLink")?.classList.toggle("hidden",active);
+  document.getElementById("signOut")?.classList.toggle("hidden",!active);
+  document.getElementById("publicAuthActions")?.toggleAttribute("hidden",active);
+  document.getElementById("publicBrand")?.toggleAttribute("hidden",active);
+  document.getElementById("publicLanding")?.toggleAttribute("hidden",active);
+  document.getElementById("customerLabel")?.toggleAttribute("hidden",!active);
+  document.getElementById("menuButton")?.toggleAttribute("hidden",!active);
+  document.getElementById("categoryDrawer")?.toggleAttribute("hidden",!active);
+  if(active&&!localStorage.getItem("cappeto_consumer_name"))document.getElementById("customerLabel").textContent=es?"Consumidor":"Consumer";
+  if(!active){
+    const drawer=document.getElementById("categoryDrawer");
+    drawer?.classList.remove("open");
+    drawer?.setAttribute("aria-hidden","true");
+    document.getElementById("menuButton")?.setAttribute("aria-expanded","false");
+  }
+}
 const CATALOG_URL="https://unike0dd.github.io/cappeto/data/storefront.json";
 const ASSET_BASE="https://unike0dd.github.io/cappeto/";
 const fallback=[{"id":"cafe-latte","name":"Café Latte","imageUrl":"assets/products/01-cappeto-cafe-latte.webp","priceCents":375},{"id":"double-espresso","name":"Double Espresso","imageUrl":"assets/products/02-cappeto-double-espresso.webp","priceCents":325},{"id":"iced-cappuccino","name":"Iced Cappuccino","imageUrl":"assets/products/03-cappeto-iced-cappuccino.webp","priceCents":425},{"id":"cafe-mocha","name":"Café Mocha","imageUrl":"assets/products/04-cappeto-cafe-mocha.webp","priceCents":450},{"id":"caramel-macchiato","name":"Caramel Macchiato","imageUrl":"assets/products/05-cappeto-caramel-macchiato.webp","priceCents":475},{"id":"cola-lime","name":"Cola & Lime","imageUrl":"assets/products/06-cappeto-cola-lime.webp","priceCents":250},{"id":"citrus-mint-soda","name":"Citrus Mint Soda","imageUrl":"assets/products/07-cappeto-citrus-mint-soda.webp","priceCents":295},{"id":"berry-rosemary-soda","name":"Berry Rosemary Soda","imageUrl":"assets/products/08-cappeto-berry-rosemary-soda.webp","priceCents":325},{"id":"fresh-orange-juice","name":"Fresh Orange Juice","imageUrl":"assets/products/09-cappeto-fresh-orange-juice.webp","priceCents":350},{"id":"mango-passion-juice","name":"Mango Passion Juice","imageUrl":"assets/products/10-cappeto-mango-passion-juice.webp","priceCents":395},{"id":"strawberry-watermelon-juice","name":"Strawberry Watermelon Juice","imageUrl":"assets/products/11-cappeto-strawberry-watermelon-juice.webp","priceCents":395},{"id":"butter-croissant","name":"Butter Croissant","imageUrl":"assets/products/12-cappeto-butter-croissant.webp","priceCents":295},{"id":"cinnamon-roll","name":"Cinnamon Roll","imageUrl":"assets/products/13-cappeto-cinnamon-roll.webp","priceCents":325},{"id":"banana-walnut-bread","name":"Banana Walnut Bread","imageUrl":"assets/products/14-cappeto-banana-walnut-bread.webp","priceCents":350},{"id":"chicken-avocado-wrap","name":"Chicken Avocado Wrap","imageUrl":"assets/products/15-cappeto-chicken-avocado-wrap.webp","priceCents":695},{"id":"roasted-vegetable-wrap","name":"Roasted Vegetable Wrap","imageUrl":"assets/products/16-cappeto-roasted-vegetable-wrap.webp","priceCents":625},{"id":"chicken-pesto-ciabatta","name":"Chicken Pesto Ciabatta","imageUrl":"assets/products/17-cappeto-chicken-pesto-ciabatta.webp","priceCents":725},{"id":"turkey-avocado-club","name":"Turkey Avocado Club","imageUrl":"assets/products/18-cappeto-turkey-avocado-club.webp","priceCents":750},{"id":"gourmet-cheeseburger","name":"Gourmet Cheeseburger","imageUrl":"assets/products/19-cappeto-gourmet-cheeseburger.webp","priceCents":895},{"id":"gourmet-hot-dog","name":"Gourmet Hot Dog","imageUrl":"assets/products/20-cappeto-gourmet-hot-dog.webp","priceCents":695}];
@@ -23,5 +40,12 @@ let toastTimer;function toast(msg){$("#toast").textContent=msg;$("#toast").class
 $("#grid").addEventListener("click",e=>{const b=e.target.closest("[data-add]");if(b)add(b.dataset.add)});
 $("#bagLines").addEventListener("click",e=>{const plus=e.target.closest("[data-plus]"),minus=e.target.closest("[data-minus]");if(plus)add(plus.dataset.plus);if(minus){bag[minus.dataset.minus]--;if(bag[minus.dataset.minus]<=0)delete bag[minus.dataset.minus];saveBag()}});
 document.getElementById("search")?.addEventListener("input",filterProducts);
-document.getElementById("signOut").onclick=()=>{sessionStorage.removeItem(DEMO_SESSION_KEY);localStorage.removeItem(DEMO_SESSION_KEY);location.reload()};$("#bagButton").onclick=()=>setDrawer(true);$("#closeBag").onclick=()=>setDrawer(false);$("#scrim").onclick=()=>setDrawer(false);$("#checkout").onclick=()=>toast(copy[language].checkoutMsg);document.addEventListener("keydown",e=>{if(e.key==="Escape")setDrawer(false)});
+document.getElementById("signOut").onclick=()=>{
+  sessionStorage.removeItem(DEMO_SESSION_KEY);
+  sessionStorage.removeItem("cappeto_consumer_email");
+  sessionStorage.removeItem("cappeto_consumer_initial");
+  sessionStorage.removeItem("cappeto_splash_seen");
+  localStorage.removeItem(DEMO_SESSION_KEY);
+  location.reload();
+};$("#bagButton").onclick=()=>setDrawer(true);$("#closeBag").onclick=()=>setDrawer(false);$("#scrim").onclick=()=>setDrawer(false);$("#checkout").onclick=()=>toast(copy[language].checkoutMsg);document.addEventListener("keydown",e=>{if(e.key==="Escape")setDrawer(false)});
 updateCustomerSession();setTheme(localStorage.getItem("cappeto-theme")|| (matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"));setLanguage();loadProducts();

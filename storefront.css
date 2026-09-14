@@ -150,3 +150,18 @@ main{padding-top:0}.intro-banner{max-width:1500px;margin:0 auto;display:grid;gri
   .password-button-row{grid-template-columns:1fr 1fr}
   .password-button-row button{min-width:0;padding-inline:.45rem;font-size:.78rem}
 }
+
+/* Public/private authentication boundary */
+.auth-private[hidden],#publicAuthActions[hidden],#publicBrand[hidden],#publicLanding[hidden]{display:none!important}
+.public-auth-actions{grid-column:1;justify-self:start}
+.public-brand{grid-column:2;justify-self:center;color:var(--ink);font:700 clamp(1.1rem,2vw,1.45rem)/1.2 Georgia,serif}
+.public-landing{max-width:1500px;margin:0 auto;padding:clamp(2rem,7vw,6rem) clamp(1rem,6vw,6rem);text-align:center}
+.public-landing h1{max-width:16ch;margin:.2rem auto 1rem;font:clamp(2.4rem,6vw,5.8rem)/.95 Georgia,serif;letter-spacing:-.04em}
+.public-landing>p:not(.eyebrow){max-width:42rem;margin:0 auto 1.5rem;color:var(--muted);font-size:clamp(1rem,1.5vw,1.2rem)}
+.public-landing-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:.75rem}
+.public-landing-actions .plain{display:inline-flex;align-items:center;text-decoration:none}
+@media(max-width:760px){
+ .public-auth-actions .plain{font-size:.78rem}
+ .public-brand{max-width:30vw;overflow:hidden;text-overflow:ellipsis}
+ .public-landing{padding-block:2.5rem}
+}

@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://unike0dd.github.io data:; connect-src 'self' https://unike0dd.github.io; script-src 'self'; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#f7f4eb">
 <meta name="application-name" content="Cappeto Consumer">
 <meta name="author" content="Cappeto">
@@ -19,11 +21,10 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://unike0dd.github.io/capetto-end-consumers/login.html">
 <title>Cappeto · Customer sign in</title>
-<link rel="stylesheet" href="login.css?v=adaptive-1">
+<link rel="stylesheet" href="login.css?v=auth-boundary-2">
 <link rel="stylesheet" href="adaptive.css?v=adaptive-1">
 <script src="adaptive.js?v=adaptive-1" defer></script>
-<script src="login.js?v=adaptive-1" defer></script>
-<script src="consumer-identity.js?v=consumer-2" defer></script>
+<script src="login.js?v=auth-boundary-2" defer></script>
 </head>
 <body>
 <a class="skip" href="#loginCard" data-i18n="skip">Skip to sign in</a>
@@ -48,10 +49,14 @@
 <div class="heading"><p class="eyebrow" data-i18n="account">CUSTOMER ACCOUNT</p><h2 data-i18n="signIn">Sign in</h2><p data-i18n="instruction">Enter the email and password connected to your account.</p></div>
 <label><span data-i18n="email">Email address</span><input id="email" name="email" type="email" autocomplete="username" inputmode="email" required placeholder="you@example.com"></label>
 <label><span data-i18n="password">Password</span><span class="password"><input id="password" name="password" type="password" autocomplete="current-password" minlength="8" required placeholder="Enter your password"><button id="showPassword" type="button" data-i18n="show" aria-label="Show password">Show</button></span></label>
-<div class="options"><label class="remember"><input id="remember" type="checkbox"> <span data-i18n="remember">Remember me</span></label><button class="text" id="forgot" type="button" data-i18n="forgot">Forgot password?</button></div>
+<div class="options"><span class="session-note" data-i18n="sessionOnly">For your protection, sign-in lasts for this browser session only.</span><button class="text" id="forgot" type="button" data-i18n="forgot">Forgot password?</button></div>
 <p class="message" id="message" role="status" aria-live="polite"></p>
 <button class="primary" type="submit" data-i18n="continue">Continue</button>
 <div class="divider"><span data-i18n="or">or</span></div>
+<div class="provider-options" aria-label="Other sign-in methods">
+  <button class="provider" id="googleLogin" type="button"><span class="provider-mark" aria-hidden="true">G</span><span data-i18n="google">Continue with Google</span></button>
+  <button class="provider" id="phoneLogin" type="button"><span class="provider-mark" aria-hidden="true">☎</span><span data-i18n="phone">Continue with phone number</span></button>
+</div>
 <button class="secondary" id="create" type="button" data-i18n="create">Create a customer account</button>
 <p class="browse"><span data-i18n="noAccount">Just browsing?</span> <a href="./" data-i18n="menu">Continue to the menu</a></p>
 </form>
