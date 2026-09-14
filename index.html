@@ -43,17 +43,13 @@
   <div class="consumer-popover" id="consumerPopover" hidden><strong id="consumerEmail">consumer@cappeto.demo</strong><label for="consumerName">Display name</label><input id="consumerName" maxlength="40" autocomplete="name" placeholder="Consumer"><div class="popover-actions"><button id="saveConsumer" type="button">Save</button><button id="useInitial" type="button">Use initial only</button></div></div>
 </header>
 <main>
-  <section class="hero">
-    <div>
+  <section class="intro-banner" aria-labelledby="introTitle">
+    <div class="intro-title">
       <p class="eyebrow" data-copy="eyebrow">YOUR NEIGHBORHOOD CAFÉ</p>
-      <h1 data-copy="heroTitle">A little joy,<br><em>made fresh.</em></h1>
-      <p class="hero-copy" data-copy="heroCopy">Coffee, something sweet, or a satisfying bite—find your favorite and make it yours.</p>
-      <a class="primary" href="#products" data-copy="browse">Browse the menu</a>
+      <h1 id="introTitle" data-copy="heroTitle">A little joy, <em>made fresh.</em></h1>
     </div>
-    <div class="hero-photo">
-      <img src="https://unike0dd.github.io/cappeto/assets/products/01-cappeto-cafe-latte.webp" alt="Cappeto café latte" fetchpriority="high">
-      <span data-copy="fresh">Fresh today</span>
-    </div>
+    <p class="hero-copy" data-copy="heroCopy">Coffee, something sweet, or a satisfying bite—find your favorite and make it yours.</p>
+    <a class="primary intro-action" href="#products" data-copy="browse">Browse the menu</a>
   </section>
   <section class="menu" id="products" aria-labelledby="menuTitle">
     <div class="section-head">
