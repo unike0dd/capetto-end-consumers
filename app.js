@@ -2,6 +2,7 @@ const DEMO_SESSION_KEY="cappeto_consumer_demo_session";
 function customerSignedIn(){return sessionStorage.getItem(DEMO_SESSION_KEY)==="active"}
 function updateCustomerSession(){
   const active=customerSignedIn(),es=language==="es";
+  document.querySelector(".topbar")?.classList.toggle("is-authenticated",active);
   document.getElementById("signInLink")?.classList.toggle("hidden",active);
   document.getElementById("signOut")?.classList.toggle("hidden",!active);
   document.getElementById("publicAuthActions")?.toggleAttribute("hidden",active);
@@ -9,6 +10,8 @@ function updateCustomerSession(){
   document.getElementById("publicLanding")?.toggleAttribute("hidden",active);
   document.getElementById("customerLabel")?.toggleAttribute("hidden",!active);
   document.getElementById("menuButton")?.toggleAttribute("hidden",!active);
+  document.getElementById("carouselLabel")?.toggleAttribute("hidden",!active);
+  document.getElementById("navProductSearch")?.toggleAttribute("hidden",!active);
   document.getElementById("categoryDrawer")?.toggleAttribute("hidden",!active);
   if(active&&!localStorage.getItem("cappeto_consumer_name"))document.getElementById("customerLabel").textContent=es?"Consumidor":"Consumer";
   if(!active){
