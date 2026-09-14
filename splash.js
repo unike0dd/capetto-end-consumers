@@ -89,6 +89,7 @@
   screen.hidden=false;
   screen.setAttribute("aria-hidden","false");
   document.body.style.overflow="hidden";
+  requestAnimationFrame(()=>languageButtons[0]?.focus({preventScroll:true}));
 
   let finished=false;
   function dismiss(){

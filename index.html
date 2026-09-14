@@ -27,19 +27,19 @@
 <link rel="stylesheet" href="styles.css?v=layout-7">
 <link rel="stylesheet" href="adaptive.css?v=layout-7">
 <link rel="stylesheet" href="storefront.css?v=configuration-12">
-<link rel="stylesheet" href="splash.css?v=personal-11">
+<link rel="stylesheet" href="splash.css?v=reflow-13">
 <script src="adaptive.js?v=layout-7" defer></script>
 <script src="app.js?v=personal-11" defer></script>
 <script src="storefront.js?v=configuration-12" defer></script>
-<script src="splash.js?v=personal-11" defer></script>
+<script src="splash.js?v=reflow-13" defer></script>
 </head>
 <body>
 <a class="skip" href="#products">Skip to products</a>
 <div class="splash-screen" id="splashScreen" aria-hidden="true" hidden>
   <div class="splash-grid" id="splashGrid" aria-hidden="true"></div>
-  <section class="splash-welcome" id="splashWelcome" role="status" aria-live="polite">
+  <section class="splash-welcome" id="splashWelcome" role="dialog" aria-modal="true" aria-labelledby="splashMainTitle">
     <p class="splash-thanks">Thank you for choosing Cappeto,</p>
-    <p class="splash-kicker">A little joy,</p><h1>MADE FRESH</h1>
+    <p class="splash-kicker">A little joy,</p><h1 id="splashMainTitle">MADE FRESH</h1>
     <p class="splash-copy">Coffee; something sweet, or a satisfying bite—find your favorite and make it yours.</p>
     <h2>WHAT ARE YOU CRAVING?</h2><p class="splash-menu">Explore our menu</p>
     <div class="splash-preferences" aria-label="Welcome preferences">
@@ -62,8 +62,8 @@
     <button class="splash-cta" id="exploreSplash" type="button" aria-describedby="splashChoiceHint" disabled>Explore the menu</button>
     <p class="splash-greeting">Welcome back, <strong id="splashConsumer">Consumer</strong>.</p>
     <label class="splash-never"><input id="splashNeverShow" type="checkbox"> <span>Do not show this welcome again</span></label>
+    <button class="splash-skip" id="skipSplash" type="button">Skip welcome</button>
   </section>
-  <button class="splash-skip" id="skipSplash" type="button">Skip welcome</button>
 </div>
 <header class="topbar">
   <span class="header-spacer" aria-hidden="true"></span>
