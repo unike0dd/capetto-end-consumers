@@ -26,13 +26,26 @@
 <title>Cappeto · Order your favorites</title>
 <link rel="stylesheet" href="styles.css?v=layout-7">
 <link rel="stylesheet" href="adaptive.css?v=layout-7">
-<link rel="stylesheet" href="storefront.css?v=layout-7">
+<link rel="stylesheet" href="storefront.css?v=onboarding-8">
+<link rel="stylesheet" href="splash.css?v=onboarding-8">
 <script src="adaptive.js?v=layout-7" defer></script>
 <script src="app.js?v=layout-7" defer></script>
-<script src="storefront.js?v=layout-7" defer></script>
+<script src="storefront.js?v=onboarding-8" defer></script>
+<script src="splash.js?v=onboarding-8" defer></script>
 </head>
 <body>
 <a class="skip" href="#products">Skip to products</a>
+<div class="splash-screen" id="splashScreen" aria-hidden="true" hidden>
+  <div class="splash-grid" id="splashGrid" aria-hidden="true"></div>
+  <section class="splash-welcome" id="splashWelcome" role="status" aria-live="polite">
+    <p class="splash-kicker">A little joy,</p><h1>MADE FRESH</h1>
+    <p class="splash-copy">Coffee; something sweet, or a satisfying bite—find your favorite and make it yours.</p>
+    <h2>WHAT ARE YOU CRAVING?</h2><p class="splash-menu">Explore our menu</p>
+    <p class="splash-greeting">Welcome back, <strong id="splashConsumer">Consumer</strong>.</p>
+    <p class="splash-thanks">Thank you for choosing Cappeto.</p>
+  </section>
+  <button class="splash-skip" id="skipSplash" type="button">Skip welcome</button>
+</div>
 <header class="topbar">
   <button class="consumer-button" id="consumerButton" type="button" aria-controls="consumerPopover" aria-expanded="false"><span class="customer-avatar" id="consumerAvatar">C</span><span id="customerLabel">Consumer</span></button>
   <a class="business-title" href="#products" aria-label="Cappeto products"><span>C</span><strong>Cappeto</strong></a>
@@ -45,13 +58,12 @@
 <main>
   <section class="intro-banner" aria-labelledby="introTitle">
     <div class="intro-copy">
-      <h1 id="introTitle" data-copy="heroTitle">A little joy, <em>made fresh.</em></h1>
-      <p class="hero-copy" data-copy="heroCopy">Coffee, something sweet, or a satisfying bite—find your favorite and make it yours.</p>
+      <h1 id="introTitle" data-copy="heroTitle">A little joy,<br><strong>MADE FRESH</strong></h1>
+      <p class="hero-copy" data-copy="heroCopy">Coffee; something sweet, or a satisfying bite—find your favorite and make it yours.</p>
     </div>
     <div class="intro-menu">
       <p class="eyebrow" data-copy="menuEyebrow">WHAT ARE YOU CRAVING?</p>
       <h2 id="menuTitle" data-copy="menuTitle">Explore our menu</h2>
-      <a class="primary intro-action" href="#products" data-copy="browse">Browse the menu</a>
     </div>
   </section>
   <section class="menu" id="products" aria-labelledby="carouselLabel">
