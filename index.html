@@ -26,12 +26,12 @@
 <title>Cappeto · Order your favorites</title>
 <link rel="stylesheet" href="styles.css?v=layout-7">
 <link rel="stylesheet" href="adaptive.css?v=layout-7">
-<link rel="stylesheet" href="storefront.css?v=onboarding-8">
-<link rel="stylesheet" href="splash.css?v=onboarding-10">
+<link rel="stylesheet" href="storefront.css?v=personal-11">
+<link rel="stylesheet" href="splash.css?v=personal-11">
 <script src="adaptive.js?v=layout-7" defer></script>
-<script src="app.js?v=layout-7" defer></script>
-<script src="storefront.js?v=onboarding-8" defer></script>
-<script src="splash.js?v=onboarding-10" defer></script>
+<script src="app.js?v=personal-11" defer></script>
+<script src="storefront.js?v=personal-11" defer></script>
+<script src="splash.js?v=personal-11" defer></script>
 </head>
 <body>
 <a class="skip" href="#products">Skip to products</a>
@@ -61,17 +61,17 @@
     <p class="splash-choice-hint" id="splashChoiceHint">Choose a language and theme to continue.</p>
     <button class="splash-cta" id="exploreSplash" type="button" aria-describedby="splashChoiceHint" disabled>Explore the menu</button>
     <p class="splash-greeting">Welcome back, <strong id="splashConsumer">Consumer</strong>.</p>
+    <label class="splash-never"><input id="splashNeverShow" type="checkbox"> <span>Do not show this welcome again</span></label>
   </section>
   <button class="splash-skip" id="skipSplash" type="button">Skip welcome</button>
 </div>
 <header class="topbar">
-  <button class="consumer-button" id="consumerButton" type="button" aria-controls="consumerPopover" aria-expanded="false"><span class="customer-avatar" id="consumerAvatar">C</span><span id="customerLabel">Consumer</span></button>
-  <a class="business-title" href="#products" aria-label="Cappeto products"><span>C</span><strong>Cappeto</strong></a>
+  <span class="header-spacer" aria-hidden="true"></span>
+  <strong class="consumer-title" id="customerLabel">Consumer</strong>
   <div class="header-fabs">
     <button class="fab bag" id="bagButton" type="button" aria-label="Open shopping bag"><svg class="bag-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.8 8.5h10.4l1 11H5.8l1-11Z"/><path d="M9 9V6.8a3 3 0 0 1 6 0V9"/></svg><span class="sr-only">Shopping bag</span><b id="bagCount">0</b></button>
-    <button class="fab menu-button" id="menuButton" type="button" aria-label="Open product categories" aria-controls="categoryDrawer" aria-expanded="false"><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span><span class="sr-only">Product menu</span></button>
+    <button class="fab settings-button" id="menuButton" type="button" aria-label="Open settings and configuration" aria-controls="categoryDrawer" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6 1.7 1.7 0 0 0-.4 1.1V21H9.6v-.1A1.7 1.7 0 0 0 8.5 19.4a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-.6-1 1.7 1.7 0 0 0-1.1-.4H3V9.6h.1A1.7 1.7 0 0 0 4.6 8.5a1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.83-2.83.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-.6 1.7 1.7 0 0 0 .4-1.1V3h4v.1A1.7 1.7 0 0 0 15.5 4.6a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 19.4 9c.38.25.7.6.88 1 .14.32.2.68.2 1.03V13c0 .35-.07.7-.2 1.03-.18.4-.5.75-.88.97Z"/></svg><span class="sr-only">Settings and configuration</span></button>
   </div>
-  <div class="consumer-popover" id="consumerPopover" hidden><strong id="consumerEmail">consumer@cappeto.demo</strong><label for="consumerName">Display name</label><input id="consumerName" maxlength="40" autocomplete="name" placeholder="Consumer"><div class="popover-actions"><button id="saveConsumer" type="button">Save</button><button id="useInitial" type="button">Use initial only</button></div></div>
 </header>
 <main>
   <section class="intro-banner" aria-labelledby="introTitle">
@@ -99,8 +99,32 @@
   <div class="totals"><p><span data-copy="subtotal">Subtotal</span><b id="subtotal">$0.00</b></p><p class="total"><span data-copy="total">Total</span><b id="total">$0.00</b></p></div>
   <button class="primary checkout" id="checkout" data-copy="checkout">Continue to checkout</button>
 </aside>
-<aside class="category-drawer" id="categoryDrawer" aria-hidden="true" aria-labelledby="categoryTitle"><div class="drawer-head"><div><p class="eyebrow" id="browseLabel">BROWSE</p><h2 id="categoryTitle">Product categories</h2></div><button class="close" id="closeMenu" aria-label="Close categories">×</button></div><nav class="category-list" id="filters" aria-label="Product categories"></nav><div class="menu-preferences"><button class="preference-toggle" id="language" type="button" aria-pressed="false"><span id="languageLabel">Language</span><strong>EN</strong></button><button class="preference-toggle" id="theme" type="button" aria-pressed="false"><span id="themeLabel">Theme</span><strong>Dark</strong></button><a class="plain hidden" id="signInLink" href="login.html">Sign in</a><button class="plain" id="signOut" type="button">Sign out</button></div></aside>
+<aside class="category-drawer settings-drawer" id="categoryDrawer" aria-hidden="true" aria-labelledby="categoryTitle">
+  <div class="drawer-head"><div><p class="eyebrow" id="browseLabel">ACCOUNT</p><h2 id="categoryTitle">Settings &amp; configuration</h2></div><button class="close" id="closeMenu" aria-label="Close settings">×</button></div>
+  <form class="settings-form" id="settingsForm">
+    <section class="settings-section" aria-labelledby="configurationTitle">
+      <h3 id="configurationTitle">Configuration</h3>
+      <fieldset><legend>Appearance</legend><div class="segmented"><button type="button" data-theme-choice="light" aria-pressed="false">Light</button><button type="button" data-theme-choice="dark" aria-pressed="false">Dark</button></div></fieldset>
+      <fieldset><legend>Language</legend><div class="segmented"><button type="button" data-language-choice="en" aria-pressed="false">EN</button><button type="button" data-language-choice="es" aria-pressed="false">ES</button></div></fieldset>
+      <label>Email<input id="settingsEmail" type="email" autocomplete="email"></label>
+      <label>Alternate email<input id="alternateEmail" type="email" autocomplete="email"></label>
+      <div class="settings-grid"><label>Name<input id="settingsFirstName" autocomplete="given-name"></label><label>Last name<input id="settingsLastName" autocomplete="family-name"></label></div>
+      <label>Address<input id="settingsAddress" autocomplete="street-address"></label>
+      <div class="settings-grid"><label>Zip code<input id="settingsZip" inputmode="numeric" autocomplete="postal-code"></label><label>Phone<input id="settingsPhone" type="tel" autocomplete="tel"></label></div>
+      <div class="password-actions"><button class="plain" id="resetPassword" type="button">Reset password</button><label>New password<input id="newPassword" type="password" autocomplete="new-password" minlength="8"></label><button class="plain" id="updatePassword" type="button">Update password</button></div>
+    </section>
+    <section class="settings-section" aria-labelledby="settingsTitle">
+      <h3 id="settingsTitle">Settings</h3>
+      <label>Picture<input id="settingsPicture" type="file" accept="image/*"></label>
+      <label>Nickname<input id="settingsNickname" maxlength="40" autocomplete="nickname"></label>
+      <label class="switch-row"><span><strong>MFA</strong><small>Require an additional verification step.</small></span><input id="settingsMfa" type="checkbox" role="switch"></label>
+      <div class="biometric-actions"><button class="plain" id="fingerprintButton" type="button">Fingerprint</button><button class="plain" id="faceprintButton" type="button">Faceprint</button></div>
+    </section>
+    <button class="primary settings-save" type="submit">Save settings</button>
+  </form>
+  <div class="settings-footer"><a class="plain hidden" id="signInLink" href="login.html">Sign in</a><button class="plain" id="signOut" type="button">Sign out</button></div>
+</aside>
 <div class="scrim" id="scrim"></div>
 <div class="toast" id="toast" role="status"></div>
-<footer><a class="brand footer-brand" href="#"><span>C</span><strong>Cappeto</strong></a><p data-copy="footer">Freshly prepared café favorites.</p><small>© 2026 Cappeto</small></footer>
+<footer><strong class="footer-brand">Cappeto</strong><p data-copy="footer">Freshly prepared café favorites.</p><small>© 2026 Cappeto</small></footer>
 </body></html>

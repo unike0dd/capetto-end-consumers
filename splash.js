@@ -4,19 +4,20 @@
   const welcome=document.getElementById("splashWelcome");
   const skip=document.getElementById("skipSplash");
   const explore=document.getElementById("exploreSplash");
-  if(!screen||!customerSignedIn()||sessionStorage.getItem("cappeto_splash_seen")==="true")return;
+  if(!screen||!customerSignedIn()||sessionStorage.getItem("cappeto_splash_seen")==="true"||localStorage.getItem("cappeto_hide_welcome")==="true")return;
 
   const languageButtons=[...screen.querySelectorAll("[data-splash-language]")];
   const themeButtons=[...screen.querySelectorAll("[data-splash-theme]")];
   const hint=document.getElementById("splashChoiceHint");
+  const neverShow=document.getElementById("splashNeverShow");
   const languageLegend=document.getElementById("splashLanguageLegend");
   const themeLegend=document.getElementById("splashThemeLegend");
   const name=localStorage.getItem("cappeto_consumer_name")||"Consumer";
   document.getElementById("splashConsumer").textContent=name;
 
   const content={
-    en:{thanks:"Thank you for choosing Cappeto,",kicker:"A little joy,",fresh:"MADE FRESH",copy:"Coffee; something sweet, or a satisfying bite—find your favorite and make it yours.",question:"WHAT ARE YOU CRAVING?",menu:"Explore our menu",cta:"Explore the menu",welcome:"Welcome back, ",skip:"Skip welcome",languageLegend:"Choose your language",themeLegend:"Choose your theme",light:"Light",dark:"Dark",hint:"Choose a language and theme to continue.",ready:"Your choices are set. Explore when you’re ready."},
-    es:{thanks:"Gracias por elegir Cappeto,",kicker:"Un poco de alegría,",fresh:"RECIÉN PREPARADA",copy:"Café; algo dulce o un bocado delicioso—encuentra tu favorito y hazlo tuyo.",question:"¿QUÉ SE TE ANTOJA?",menu:"Explora nuestro menú",cta:"Explorar el menú",welcome:"Qué gusto verte, ",skip:"Omitir bienvenida",languageLegend:"Elige tu idioma",themeLegend:"Elige tu tema",light:"Claro",dark:"Oscuro",hint:"Elige un idioma y un tema para continuar.",ready:"Tus preferencias están listas. Explora cuando quieras."}
+    en:{thanks:"Thank you for choosing Cappeto,",kicker:"A little joy,",fresh:"MADE FRESH",copy:"Coffee; something sweet, or a satisfying bite—find your favorite and make it yours.",question:"WHAT ARE YOU CRAVING?",menu:"Explore our menu",cta:"Explore the menu",welcome:"Welcome back, ",skip:"Skip welcome",languageLegend:"Choose your language",themeLegend:"Choose your theme",light:"Light",dark:"Dark",hint:"Choose a language and theme to continue.",ready:"Your choices are set. Explore when you’re ready.",never:"Do not show this welcome again"},
+    es:{thanks:"Gracias por elegir Cappeto,",kicker:"Un poco de alegría,",fresh:"RECIÉN PREPARADA",copy:"Café; algo dulce o un bocado delicioso—encuentra tu favorito y hazlo tuyo.",question:"¿QUÉ SE TE ANTOJA?",menu:"Explora nuestro menú",cta:"Explorar el menú",welcome:"Qué gusto verte, ",skip:"Omitir bienvenida",languageLegend:"Elige tu idioma",themeLegend:"Elige tu tema",light:"Claro",dark:"Oscuro",hint:"Elige un idioma y un tema para continuar.",ready:"Tus preferencias están listas. Explora cuando quieras.",never:"No volver a mostrar esta bienvenida"}
   };
 
   let selectedLanguage=null;
@@ -43,6 +44,7 @@
     screen.querySelector('[data-splash-theme="light"]').textContent=text.light;
     screen.querySelector('[data-splash-theme="dark"]').textContent=text.dark;
     hint.textContent=selectedLanguage&&selectedTheme?text.ready:text.hint;
+    neverShow.nextElementSibling.textContent=text.never;
     document.documentElement.lang=lang;
   }
 
@@ -93,6 +95,7 @@
     if(finished)return;
     finished=true;
     sessionStorage.setItem("cappeto_splash_seen","true");
+    if(neverShow.checked)localStorage.setItem("cappeto_hide_welcome","true");
     welcome.classList.add("is-fading");
     const reduced=matchMedia("(prefers-reduced-motion:reduce)").matches;
     tiles.forEach((tile,index)=>setTimeout(()=>tile.classList.add("is-dissolving"),reduced?0:((index*47)%680)));

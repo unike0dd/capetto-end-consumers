@@ -15,3 +15,7 @@ html[data-theme=dark] .splash-welcome .splash-choice button[aria-pressed=true]{b
 html[data-theme=dark] .splash-choice-hint{color:#d2ae59}
 html[data-theme=dark] .splash-cta:disabled:hover{background:#f5f1e7;color:#6f4e37}
 @media(max-width:600px){.splash-welcome .splash-preferences{grid-template-columns:1fr;gap:.65rem}.splash-choice-options{gap:.5rem}.splash-welcome{max-height:calc(100dvh - 1rem);overflow:auto}.splash-thanks{padding-top:0}}
+
+.splash-never{display:flex;align-items:center;justify-content:center;gap:.45rem;margin:.7rem auto 0;color:#6f4e37;font-size:.88rem;cursor:pointer}
+.splash-never input{width:1.1rem;height:1.1rem;accent-color:#7851a9}
+html[data-theme=dark] .splash-never{color:#d2ae59}
