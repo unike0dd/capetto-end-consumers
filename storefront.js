@@ -5,6 +5,7 @@ function getConsumerName(){
   return [first,last].filter(Boolean).join(" ")||localStorage.getItem(consumerNameKey)||localStorage.getItem("cappeto_nickname")||"Consumer";
 }
 function paintConsumer(){
+  if(!customerSignedIn())return;
   const name=getConsumerName();
   localStorage.setItem(consumerNameKey,name);
   document.getElementById("customerLabel").textContent=name;
@@ -12,6 +13,7 @@ function paintConsumer(){
 }
 function setPanel(type,open){
   const isSettings=type==="menu";
+  if(isSettings&&!customerSignedIn())return;
   const panel=document.getElementById(isSettings?"categoryDrawer":"drawer");
   const button=document.getElementById(isSettings?"menuButton":"bagButton");
   const other=document.getElementById(isSettings?"drawer":"categoryDrawer");
@@ -72,6 +74,7 @@ function syncPreferences(){
   themeButton.setAttribute("aria-label",theme==="dark"?(es?"Cambiar a modo claro":"Switch to light mode"):(es?"Cambiar a modo oscuro":"Switch to dark mode"));
 }
 function fillSettings(){
+  if(!customerSignedIn())return;
   const values={
     settingsEmail:localStorage.getItem("cappeto_consumer_email")||sessionStorage.getItem("cappeto_consumer_email")||"",
     alternateEmail:localStorage.getItem("cappeto_alternate_email")||"",
@@ -88,6 +91,7 @@ function fillSettings(){
 }
 function saveSettings(event){
   event.preventDefault();
+  if(!customerSignedIn())return;
   const mappings={
     settingsEmail:"cappeto_consumer_email",alternateEmail:"cappeto_alternate_email",
     settingsFirstName:"cappeto_first_name",settingsLastName:"cappeto_last_name",
@@ -110,7 +114,7 @@ document.getElementById("previousProduct").onclick=event=>activateChevron(event.
 document.getElementById("nextProduct").onclick=event=>activateChevron(event.currentTarget,1);
 document.getElementById("grid").addEventListener("scroll",updateCarouselButtons,{passive:true});
 document.getElementById("grid").addEventListener("keydown",event=>{if(event.key==="ArrowLeft")moveProduct(-1);if(event.key==="ArrowRight")moveProduct(1)});
-document.getElementById("menuButton").onclick=()=>setPanel("menu",document.getElementById("menuButton").getAttribute("aria-expanded")!=="true");
+document.getElementById("menuButton").onclick=()=>{if(customerSignedIn())setPanel("menu",document.getElementById("menuButton").getAttribute("aria-expanded")!=="true")};
 document.getElementById("closeMenu").onclick=()=>setPanel("menu",false);
 document.getElementById("bagButton").onclick=()=>setPanel("bag",true);
 document.getElementById("closeBag").onclick=()=>setPanel("bag",false);
@@ -139,5 +143,4 @@ document.getElementById("updatePassword").onclick=()=>{
 document.getElementById("fingerprintButton").onclick=()=>toast(language==="es"?"La biometría requiere autenticación segura":"Biometrics require secure authentication");
 document.getElementById("faceprintButton").onclick=()=>toast(language==="es"?"La biometría requiere autenticación segura":"Biometrics require secure authentication");
 document.addEventListener("keydown",event=>{if(event.key==="Escape"){setPanel("menu",false);setPanel("bag",false)}});
-paintConsumer();
-fillSettings();
+if(customerSignedIn()){paintConsumer();fillSettings()}else{syncPreferences()}
