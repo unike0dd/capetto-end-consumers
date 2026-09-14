@@ -26,7 +26,7 @@
 <title>Cappeto · Order your favorites</title>
 <link rel="stylesheet" href="styles.css?v=layout-7">
 <link rel="stylesheet" href="adaptive.css?v=layout-7">
-<link rel="stylesheet" href="storefront.css?v=configuration-12">
+<link rel="stylesheet" href="storefront.css?v=controls-14">
 <link rel="stylesheet" href="splash.css?v=reflow-13">
 <script src="adaptive.js?v=layout-7" defer></script>
 <script src="app.js?v=personal-11" defer></script>
@@ -74,23 +74,13 @@
   </div>
 </header>
 <main>
-  <section class="intro-banner" aria-labelledby="introTitle">
-    <div class="intro-copy">
-      <h1 id="introTitle" data-copy="heroTitle">A little joy,<br><strong>MADE FRESH</strong></h1>
-      <p class="hero-copy" data-copy="heroCopy">Coffee; something sweet, or a satisfying bite—find your favorite and make it yours.</p>
-    </div>
-    <div class="intro-menu">
-      <p class="eyebrow" data-copy="menuEyebrow">WHAT ARE YOU CRAVING?</p>
-      <h2 id="menuTitle" data-copy="menuTitle">Explore our menu</h2>
-    </div>
-  </section>
   <section class="menu" id="products" aria-labelledby="carouselLabel">
     <div class="section-head">
       <p class="eyebrow carousel-label" id="carouselLabel" data-copy="eyebrow">YOUR NEIGHBORHOOD CAFÉ</p>
       <label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Search Cappeto" aria-label="Search products"></label>
     </div>
     <p class="results" id="results" role="status"></p>
-    <div class="carousel-shell"><button class="carousel-arrow previous" id="previousProduct" type="button" aria-label="Previous product">‹</button><div class="grid" id="grid" aria-live="polite" tabindex="0"></div><button class="carousel-arrow next" id="nextProduct" type="button" aria-label="Next product">›</button></div>
+    <div class="carousel-shell"><button class="carousel-arrow previous" id="previousProduct" type="button" aria-label="Previous product"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg></button><div class="grid" id="grid" aria-live="polite" tabindex="0"></div><button class="carousel-arrow next" id="nextProduct" type="button" aria-label="Next product"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 6 6 6-6 6"/></svg></button></div>
   </section>
 </main>
 <aside class="drawer" id="drawer" aria-hidden="true" aria-labelledby="bagTitle">
@@ -108,7 +98,7 @@
       <div class="settings-grid"><label>Name<input id="settingsFirstName" autocomplete="given-name"></label><label>Last name<input id="settingsLastName" autocomplete="family-name"></label></div>
       <label>Address<input id="settingsAddress" autocomplete="street-address"></label>
       <div class="settings-grid"><label>Zip code<input id="settingsZip" inputmode="numeric" autocomplete="postal-code"></label><label>Phone<input id="settingsPhone" type="tel" autocomplete="tel"></label></div>
-      <div class="password-actions"><button class="plain" id="resetPassword" type="button">Reset password</button><label>New password<input id="newPassword" type="password" autocomplete="new-password" minlength="8"></label><button class="plain" id="updatePassword" type="button">Update password</button></div>
+      <div class="password-actions"><label>New password<input id="newPassword" type="password" autocomplete="new-password" minlength="8"></label><div class="password-button-row"><button class="plain" id="resetPassword" type="button">Reset password</button><button class="plain" id="updatePassword" type="button">Update password</button></div></div>
     </section>
     <section class="settings-section" aria-labelledby="settingsTitle">
       <h1 id="settingsTitle">Settings</h1>
