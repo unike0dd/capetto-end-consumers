@@ -21,7 +21,7 @@ function setPanel(type,open){
   panel.classList.toggle("open",open);
   panel.setAttribute("aria-hidden",String(!open));
   button.setAttribute("aria-expanded",String(open));
-  button.setAttribute("aria-label",open?(isSettings?"Close settings and configuration":"Close shopping bag"):(isSettings?"Open settings and configuration":"Open shopping bag"));
+  button.setAttribute("aria-label",open?(isSettings?"Close configuration":"Close shopping bag"):(isSettings?"Open configuration":"Open shopping bag"));
   document.getElementById("scrim").classList.toggle("show",open);
   document.body.style.overflow=open?"hidden":"";
   if(open)(isSettings?document.getElementById("closeMenu"):document.getElementById("closeBag")).focus();
@@ -60,9 +60,16 @@ function activateChevron(button,direction){
   setTimeout(()=>button.classList.remove("is-clicked"),420);
 }
 function syncPreferences(){
-  document.querySelectorAll("[data-language-choice]").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.languageChoice===language)));
+  const es=language==="es";
   const theme=document.documentElement.dataset.theme||"light";
-  document.querySelectorAll("[data-theme-choice]").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.themeChoice===theme)));
+  const languageButton=document.getElementById("footerLanguage");
+  const themeButton=document.getElementById("footerTheme");
+  languageButton.querySelector("span").textContent=es?"Idioma":"Language";
+  languageButton.querySelector("strong").textContent=es?"ES":"EN";
+  languageButton.setAttribute("aria-label",es?"Switch to English":"Cambiar a español");
+  themeButton.querySelector("span").textContent=es?"Tema":"Theme";
+  themeButton.querySelector("strong").textContent=theme==="dark"?(es?"Oscuro":"Dark"):(es?"Claro":"Light");
+  themeButton.setAttribute("aria-label",theme==="dark"?(es?"Cambiar a modo claro":"Switch to light mode"):(es?"Cambiar a modo oscuro":"Switch to dark mode"));
 }
 function fillSettings(){
   const values={
@@ -108,17 +115,22 @@ document.getElementById("closeMenu").onclick=()=>setPanel("menu",false);
 document.getElementById("bagButton").onclick=()=>setPanel("bag",true);
 document.getElementById("closeBag").onclick=()=>setPanel("bag",false);
 document.getElementById("scrim").onclick=()=>{setPanel("menu",false);setPanel("bag",false)};
-document.querySelectorAll("[data-language-choice]").forEach(button=>button.addEventListener("click",()=>{
-  language=button.dataset.languageChoice;
+document.getElementById("footerLanguage").addEventListener("click",()=>{
+  language=language==="en"?"es":"en";
   localStorage.setItem("cappeto-language",language);
   setLanguage();
   syncPreferences();
-}));
-document.querySelectorAll("[data-theme-choice]").forEach(button=>button.addEventListener("click",()=>{
-  setTheme(button.dataset.themeChoice);
+});
+document.getElementById("footerTheme").addEventListener("click",()=>{
+  setTheme(document.documentElement.dataset.theme==="dark"?"light":"dark");
   syncPreferences();
-}));
+});
 document.getElementById("settingsForm").addEventListener("submit",saveSettings);
+document.getElementById("removePicture").addEventListener("click",()=>{
+  document.getElementById("settingsPicture").value="";
+  localStorage.removeItem("cappeto_picture_name");
+  toast(language==="es"?"Foto eliminada":"Picture removed");
+});
 document.getElementById("resetPassword").onclick=()=>toast(language==="es"?"Se requiere el servicio seguro de autenticación":"Secure authentication service required");
 document.getElementById("updatePassword").onclick=()=>{
   document.getElementById("newPassword").value="";
