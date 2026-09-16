@@ -31,7 +31,7 @@
 <link rel="stylesheet" href="storefront.css?v=nav-controls-17">
 <link rel="stylesheet" href="splash.css?v=reflow-13">
 <script src="adaptive.js?v=layout-7" defer></script>
-<script src="app.js?v=nav-controls-17" defer></script>
+<script src="app.js?v=bag-totals-18" defer></script>
 <script src="storefront.js?v=auth-boundary-15" defer></script>
 <script src="splash.js?v=reflow-13" defer></script>
 </head>
@@ -93,7 +93,12 @@
 <aside class="drawer" id="drawer" aria-hidden="true" aria-labelledby="bagTitle">
   <div class="drawer-head"><div><p class="eyebrow" data-copy="yourOrder">YOUR ORDER</p><h2 id="bagTitle" data-copy="bagTitle">Your bag</h2></div><button class="close" id="closeBag" aria-label="Close order">×</button></div>
   <div class="bag-lines" id="bagLines"></div>
-  <div class="totals"><p><span data-copy="subtotal">Subtotal</span><b id="subtotal">$0.00</b></p><p class="total"><span data-copy="total">Total</span><b id="total">$0.00</b></p></div>
+  <div class="totals">
+    <p><span data-copy="subtotal">Subtotal</span><b id="subtotal">$0.00</b></p>
+    <p><span data-copy="vat">VAT</span><b id="vat">$0.00</b></p>
+    <p><span data-copy="delivery">Delivery</span><b id="delivery">$0.00</b></p>
+    <p class="total"><span data-copy="total">Total</span><b id="total">$0.00</b></p>
+  </div>
   <button class="primary checkout" id="checkout" data-copy="checkout">Continue to checkout</button>
 </aside>
 <aside class="category-drawer settings-drawer auth-private" id="categoryDrawer" hidden aria-hidden="true" aria-labelledby="categoryTitle">
