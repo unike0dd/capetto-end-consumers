@@ -66,12 +66,18 @@ function syncPreferences(){
   const theme=document.documentElement.dataset.theme||"light";
   const languageButton=document.getElementById("footerLanguage");
   const themeButton=document.getElementById("footerTheme");
+  const headerLanguage=document.getElementById("headerLanguage");
+  const headerTheme=document.getElementById("headerTheme");
   languageButton.querySelector("span").textContent=es?"Idioma":"Language";
   languageButton.querySelector("strong").textContent=es?"ES":"EN";
   languageButton.setAttribute("aria-label",es?"Switch to English":"Cambiar a español");
   themeButton.querySelector("span").textContent=es?"Tema":"Theme";
   themeButton.querySelector("strong").textContent=theme==="dark"?(es?"Oscuro":"Dark"):(es?"Claro":"Light");
   themeButton.setAttribute("aria-label",theme==="dark"?(es?"Cambiar a modo claro":"Switch to light mode"):(es?"Cambiar a modo oscuro":"Switch to dark mode"));
+  headerLanguage.textContent=es?"ES":"EN";
+  headerLanguage.setAttribute("aria-label",es?"Switch to English":"Cambiar a español");
+  headerTheme.textContent=theme==="dark"?(es?"Oscuro":"Dark"):(es?"Claro":"Light");
+  headerTheme.setAttribute("aria-label",theme==="dark"?(es?"Cambiar a modo claro":"Switch to light mode"):(es?"Cambiar a modo oscuro":"Switch to dark mode"));
 }
 function fillSettings(){
   if(!customerSignedIn())return;
@@ -119,16 +125,20 @@ document.getElementById("closeMenu").onclick=()=>setPanel("menu",false);
 document.getElementById("bagButton").onclick=()=>setPanel("bag",true);
 document.getElementById("closeBag").onclick=()=>setPanel("bag",false);
 document.getElementById("scrim").onclick=()=>{setPanel("menu",false);setPanel("bag",false)};
-document.getElementById("footerLanguage").addEventListener("click",()=>{
+const toggleLanguage=()=>{
   language=language==="en"?"es":"en";
   localStorage.setItem("cappeto-language",language);
   setLanguage();
   syncPreferences();
-});
-document.getElementById("footerTheme").addEventListener("click",()=>{
+};
+const toggleTheme=()=>{
   setTheme(document.documentElement.dataset.theme==="dark"?"light":"dark");
   syncPreferences();
-});
+};
+document.getElementById("footerLanguage").addEventListener("click",toggleLanguage);
+document.getElementById("headerLanguage").addEventListener("click",toggleLanguage);
+document.getElementById("footerTheme").addEventListener("click",toggleTheme);
+document.getElementById("headerTheme").addEventListener("click",toggleTheme);
 document.getElementById("settingsForm").addEventListener("submit",saveSettings);
 document.getElementById("removePicture").addEventListener("click",()=>{
   document.getElementById("settingsPicture").value="";
