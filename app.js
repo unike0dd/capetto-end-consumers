@@ -27,9 +27,60 @@ const fallback=[{"id":"cafe-latte","name":"Café Latte","imageUrl":"assets/produ
 const copy={en:{eyebrow:"YOUR NEIGHBORHOOD CAFÉ",heroTitle:'A little joy,<br><strong>MADE FRESH</strong>',heroCopy:"Coffee; something sweet, or a satisfying bite—find your favorite and make it yours.",browse:"Browse the menu",fresh:"Fresh today",menuEyebrow:"WHAT ARE YOU CRAVING?",menuTitle:"Explore our menu",yourOrder:"YOUR ORDER",bagTitle:"Your bag",subtotal:"Subtotal",vat:"VAT",delivery:"Delivery",total:"Total",checkout:"Continue to checkout",footer:"Freshly prepared café favorites.",all:"All",available:"available",add:"Add",empty:"No products match your search.",added:"Added to your bag",emptyBag:"Your bag is ready for something delicious.",checkoutMsg:"Checkout connection is the next step."},es:{eyebrow:"TU CAFÉ DE CONFIANZA",heroTitle:'Un poco de alegría,<br><strong>RECIÉN PREPARADA</strong>',heroCopy:"Café, algo dulce o un bocado delicioso: encuentra tu favorito y hazlo tuyo.",browse:"Explorar el menú",fresh:"Fresco hoy",menuEyebrow:"¿QUÉ SE TE ANTOJA?",menuTitle:"Explora nuestro menú",yourOrder:"TU PEDIDO",bagTitle:"Tu bolsa",subtotal:"Subtotal",vat:"IVA",delivery:"Entrega",total:"Total",checkout:"Continuar al pago",footer:"Favoritos de cafetería recién preparados.",all:"Todos",available:"disponibles",add:"Agregar",empty:"Ningún producto coincide con tu búsqueda.",added:"Agregado a tu bolsa",emptyBag:"Tu bolsa está lista para algo delicioso.",checkoutMsg:"La conexión de pago es el siguiente paso."}};
 let products=[],filtered=[],language=localStorage.getItem("cappeto-language")||"en",bag=JSON.parse(localStorage.getItem("cappeto-bag")||"{}");
 const $=s=>document.querySelector(s), money=c=>new Intl.NumberFormat(language==="es"?"es-EC":"en-US",{style:"currency",currency:"USD"}).format(c/100);
+const searchAliases={
+  "cafe-latte":"coffee cafe latte milk leche café con leche",
+  "double-espresso":"coffee cafe espresso expreso double doble strong fuerte",
+  "iced-cappuccino":"coffee cafe cappuccino capuchino iced cold frio fría helado",
+  "cafe-mocha":"coffee cafe mocha moca chocolate cacao",
+  "caramel-macchiato":"coffee cafe caramel caramelo macchiato macchiatto machiato",
+  "cola-lime":"cola soda gaseosa refresco lime limon limón",
+  "citrus-mint-soda":"soda gaseosa refresco citrus citrico cítrico mint menta hierbabuena",
+  "berry-rosemary-soda":"soda gaseosa refresco berry berries frutos rojos rosemary romero",
+  "fresh-orange-juice":"juice jugo zumo fresh fresco orange naranja",
+  "mango-passion-juice":"juice jugo zumo mango passion maracuya maracuyá parchita",
+  "strawberry-watermelon-juice":"juice jugo zumo strawberry fresa frutilla watermelon sandia sandía",
+  "butter-croissant":"bakery pastry panaderia panadería butter mantequilla croissant croasan medialuna",
+  "cinnamon-roll":"bakery pastry panaderia panadería cinnamon canela roll rollo",
+  "banana-walnut-bread":"bakery bread panaderia panadería pan banana platano plátano walnut nuez",
+  "chicken-avocado-wrap":"wrap burrito chicken pollo avocado aguacate palta",
+  "roasted-vegetable-wrap":"wrap burrito roasted asado vegetable vegetables vegetal vegetales verdura verduras",
+  "chicken-pesto-ciabatta":"sandwich bocadillo chicken pollo pesto ciabatta chapata",
+  "turkey-avocado-club":"sandwich club turkey pavo avocado aguacate palta",
+  "gourmet-cheeseburger":"burger hamburger hamburguesa gourmet cheese queso",
+  "gourmet-hot-dog":"hot dog hotdog perro caliente salchicha gourmet"
+};
+const normalizeSearch=value=>String(value??"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/&/g," and ").replace(/[^a-z0-9]+/g," ").trim().replace(/\s+/g," ");
+function editDistance(left,right){
+  if(left===right)return 0;
+  const previous=Array.from({length:right.length+1},(_,index)=>index);
+  for(let row=1;row<=left.length;row++){
+    let diagonal=previous[0];
+    previous[0]=row;
+    for(let column=1;column<=right.length;column++){
+      const above=previous[column];
+      previous[column]=Math.min(previous[column]+1,previous[column-1]+1,diagonal+(left[row-1]===right[column-1]?0:1));
+      diagonal=above;
+    }
+  }
+  return previous[right.length];
+}
+function looselyMatches(queryToken,candidate){
+  if(candidate.includes(queryToken)||queryToken.includes(candidate))return true;
+  if(queryToken.length<4||candidate.length<4)return false;
+  const tolerance=Math.max(queryToken.length,candidate.length)>=8?2:1;
+  return Math.abs(queryToken.length-candidate.length)<=tolerance&&editDistance(queryToken,candidate)<=tolerance;
+}
+function productMatches(product,query){
+  const normalizedQuery=normalizeSearch(query);
+  if(!normalizedQuery)return true;
+  const searchable=normalizeSearch([product.name,product.category,product.description,searchAliases[product.id]].filter(Boolean).join(" "));
+  if(searchable.includes(normalizedQuery))return true;
+  const words=searchable.split(" ");
+  return normalizedQuery.split(" ").every(token=>words.some(word=>looselyMatches(token,word)));
+}
 async function loadProducts(){try{const r=await fetch(CATALOG_URL,{cache:"no-store"});if(!r.ok)throw 0;const d=await r.json();products=Array.isArray(d.products)?d.products:fallback}catch{products=fallback}products=products.filter(p=>p&&p.imageUrl&&Number.isFinite(p.priceCents)).map(p=>({...p,imageUrl:p.imageUrl.startsWith("http")?p.imageUrl:ASSET_BASE+p.imageUrl}));renderFilters();filterProducts();renderBag();updateCustomerSession()}
 function renderFilters(){const filters=$("#filters");if(filters)filters.innerHTML=`<button class="filter active" aria-pressed="true">${copy[language].all}</button>`}
-function filterProducts(){const q=$("#search").value.trim().toLowerCase();filtered=products.filter(p=>p.name.toLowerCase().includes(q));renderProducts()}
+function filterProducts(){const q=$("#search").value;filtered=products.filter(product=>productMatches(product,q));renderProducts()}
 function renderProducts(){$("#results").textContent=`${filtered.length} ${language==="es"?"productos":"products"}`;$("#grid").innerHTML=filtered.length?filtered.map(p=>`<article class="card"><div class="picture"><img src="${p.imageUrl}" alt="${esc(p.name)}" loading="lazy" width="640" height="640"></div><div class="card-body"><h3>${esc(p.name)}</h3><div class="card-bottom"><strong class="price">${money(p.priceCents)}</strong><button class="add" data-add="${esc(p.id)}" type="button">${copy[language].add}</button></div></div></article>`).join(""):`<p class="empty">${copy[language].empty}</p>`}
 function add(id){const p=products.find(x=>x.id===id);if(!p)return;bag[id]=Math.min((bag[id]||0)+1,99);saveBag();toast(copy[language].added)}
 function saveBag(){localStorage.setItem("cappeto-bag",JSON.stringify(bag));renderBag()}
