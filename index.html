@@ -28,11 +28,11 @@
 <title>Cappeto · Order your favorites</title>
 <link rel="stylesheet" href="styles.css?v=layout-7">
 <link rel="stylesheet" href="adaptive.css?v=layout-7">
-<link rel="stylesheet" href="storefront.css?v=nav-controls-17">
+<link rel="stylesheet" href="storefront.css?v=header-preferences-20">
 <link rel="stylesheet" href="splash.css?v=reflow-13">
 <script src="adaptive.js?v=layout-7" defer></script>
 <script src="app.js?v=bag-totals-18" defer></script>
-<script src="storefront.js?v=auth-boundary-15" defer></script>
+<script src="storefront.js?v=header-preferences-20" defer></script>
 <script src="splash.js?v=reflow-13" defer></script>
 </head>
 <body>
@@ -74,6 +74,10 @@
   <strong class="consumer-title auth-private" id="customerLabel" hidden></strong>
   <label class="search nav-product-search auth-private" id="navProductSearch" hidden><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Search Cappeto" aria-label="Search products"></label>
   <div class="header-fabs">
+    <div class="header-preferences" role="group" aria-label="Language and appearance">
+      <button class="plain header-preference" id="headerLanguage" type="button" aria-label="Cambiar a español">EN</button>
+      <button class="plain header-preference" id="headerTheme" type="button" aria-label="Switch to dark mode">Light</button>
+    </div>
     <button class="fab bag" id="bagButton" type="button" aria-label="Open shopping bag"><svg class="bag-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.8 8.5h10.4l1 11H5.8l1-11Z"/><path d="M9 9V6.8a3 3 0 0 1 6 0V9"/></svg><span class="sr-only">Shopping bag</span><b id="bagCount">0</b></button>
     <button class="fab settings-button auth-private" id="menuButton" hidden type="button" aria-label="Open configuration" aria-controls="categoryDrawer" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6 1.7 1.7 0 0 0-.4 1.1V21H9.6v-.1A1.7 1.7 0 0 0 8.5 19.4a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-.6-1 1.7 1.7 0 0 0-1.1-.4H3V9.6h.1A1.7 1.7 0 0 0 4.6 8.5a1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.83-2.83.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-.6 1.7 1.7 0 0 0 .4-1.1V3h4v.1A1.7 1.7 0 0 0 15.5 4.6a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 19.4 9c.38.25.7.6.88 1 .14.32.2.68.2 1.03V13c0 .35-.07.7-.2 1.03-.18.4-.5.75-.88.97Z"/></svg><span class="sr-only">Configuration</span></button>
   </div>
