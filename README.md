@@ -6,7 +6,7 @@ The interface is designed for mobile, tablet, laptop, desktop, keyboard use, and
 
 Live site: https://unike0dd.github.io/capetto-end-consumers/
 
-Product source: https://unike0dd.github.io/cappeto/data/products.json
+Product source: https://unike0dd.github.io/cappeto/data/storefront.json
 
 
 ## Adaptive interface
