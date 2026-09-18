@@ -17,7 +17,7 @@ class CappetoConsumerApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF356859)),
         useMaterial3: true,
       ),
-      home: const Scaffold(
+      home: Scaffold(
         body: SafeArea(
           child: Center(
             child: Semantics(
