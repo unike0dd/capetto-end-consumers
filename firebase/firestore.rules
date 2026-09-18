@@ -1,0 +1,19 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /publicCatalog/{itemId} {
+      allow read: if resource.data.published == true;
+      allow write: if false;
+    }
+
+    match /customers/{customerId}/{document=**} {
+      allow read: if request.auth != null && request.auth.uid == customerId;
+      allow write: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
