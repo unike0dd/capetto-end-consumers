@@ -2,12 +2,12 @@ const consumerNameKey="cappeto_consumer_name";
 function getConsumerName(){
   const first=sessionStorage.getItem("cappeto_first_name")||"";
   const last=sessionStorage.getItem("cappeto_last_name")||"";
-  return [first,last].filter(Boolean).join(" ")||localStorage.getItem(consumerNameKey)||sessionStorage.getItem("cappeto_nickname")||"Consumer";
+  return [first,last].filter(Boolean).join(" ")||sessionStorage.getItem(consumerNameKey)||sessionStorage.getItem("cappeto_nickname")||"Consumer";
 }
 function paintConsumer(){
   if(!customerSignedIn())return;
   const name=getConsumerName();
-  localStorage.setItem(consumerNameKey,name);
+  sessionStorage.setItem(consumerNameKey,name);
   document.getElementById("customerLabel").textContent=name;
   document.getElementById("splashConsumer")?.replaceChildren(document.createTextNode(name));
 }
@@ -106,13 +106,13 @@ function saveSettings(event){
   };
   Object.entries(mappings).forEach(([id,key])=>{
     const value=document.getElementById(id).value.trim();
-    if(value)localStorage.setItem(key,value);else localStorage.removeItem(key);
+    if(value)sessionStorage.setItem(key,value);else sessionStorage.removeItem(key);
   });
   sessionStorage.setItem("cappeto_mfa_preference",String(document.getElementById("settingsMfa").checked));
   const picture=document.getElementById("settingsPicture").files[0];
   if(picture)sessionStorage.setItem("cappeto_picture_name",picture.name);
   const fullName=[document.getElementById("settingsFirstName").value.trim(),document.getElementById("settingsLastName").value.trim()].filter(Boolean).join(" ");
-  if(fullName)localStorage.setItem(consumerNameKey,fullName);
+  if(fullName)sessionStorage.setItem(consumerNameKey,fullName);
   paintConsumer();
   toast(language==="es"?"Configuración guardada":"Settings saved");
 }

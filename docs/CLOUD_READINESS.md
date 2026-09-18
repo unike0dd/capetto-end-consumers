@@ -1,18 +1,24 @@
-# Cappeto end-consumer cloud readiness
+# Cappeto cloud readiness
 
-The existing HTML storefront remains intact. The Flutter migration shell and infrastructure validation are additive.
+The existing HTML application remains the live prototype. Cloudflare, Flutter, Firebase, Google Cloud, and Terraform work stays isolated until reviewed and activated.
 
-## Consumer boundary
+## Boundaries
 
-This application may read only the public catalog projection: product ID, localized display name, public description, category, final customer price, tax display, availability, and public media URL. It must not read purchase cost, supplier data, inventory movements, returns, damage, margins, internal accounting, staff records, or tenant administration.
+- This repository owns the consumer storefront and may receive only the public catalog projection.
+- Browser and Flutter clients never receive Cloudflare tokens, service-account credentials, Terraform state, payment secrets, or unpublished business records.
+- Google Cloud has exactly two targets: Cappeto Non-Specific and PRODUCTION.
+- Billing is connected later at the activation gate, after local builds and security validation.
 
-Development, staging, and production use separate Firebase/Google Cloud projects and separate Terraform state. No credentials or live project identifiers belong in Git.
+## GitHub to Cloudflare activation
 
-## Activation
+1. Merge the reviewed readiness pull request and protect main.
+2. Create GitHub environments named cloudflare-non_specific and cloudflare-production.
+3. Store a least-privilege CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID in those protected environments.
+4. Run the Cloudflare Worker deployment workflow manually for non_specific.
+5. The workflow builds only allowlisted public files, creates SHA-384 integrity metadata, deploys the exact build, and verifies the remote manifest and security headers.
+6. Add an approved custom-domain route only after the domain, DNS, and launch gates are confirmed.
+7. Keep production environment approval required; do not enable automatic production deployment.
 
-1. Confirm the public API/catalog contract with the owner repository.
-2. Create separate cloud projects and billing for each environment.
-3. Copy the Terraform example variables to an untracked environment-specific file.
-4. Validate and review a Terraform plan before any apply.
-5. Generate Flutter platform folders and Firebase options using official CLIs.
-6. Configure Cloudflare only after the production domain and deployment target are confirmed.
+## Later Google activation
+
+Prepare Terraform and application code without applying billable resources. At the later billing gate, connect billing first to Cappeto Non-Specific, review the Terraform plan, test the complete integration, then connect and approve PRODUCTION.
