@@ -1,4 +1,9 @@
 const DEMO_SESSION_KEY="cappeto_consumer_demo_session";
+const LEGACY_PRIVATE_KEYS=["cappeto_consumer_email","cappeto_alternate_email","cappeto_first_name","cappeto_last_name","cappeto_address","cappeto_zip","cappeto_phone","cappeto_nickname","cappeto_picture_name","cappeto_mfa_preference","cappeto_consumer_name"];
+function purgeLegacyPrivateStorage(){
+  for(const key of LEGACY_PRIVATE_KEYS)localStorage.removeItem(key);
+}
+
 function customerSignedIn(){return false}
 function updateCustomerSession(){
   const active=customerSignedIn(),es=language==="es";
@@ -105,4 +110,4 @@ document.getElementById("signOut").onclick=()=>{
   localStorage.removeItem(DEMO_SESSION_KEY);
   location.reload();
 };$("#checkout").onclick=()=>toast(copy[language].checkoutMsg);document.addEventListener("keydown",e=>{if(e.key==="Escape")setDrawer(false)});
-updateCustomerSession();setTheme(localStorage.getItem("cappeto-theme")|| (matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"));setLanguage();loadProducts();
+if(!customerSignedIn())purgeLegacyPrivateStorage();updateCustomerSession();setTheme(localStorage.getItem("cappeto-theme")|| (matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"));setLanguage();loadProducts();

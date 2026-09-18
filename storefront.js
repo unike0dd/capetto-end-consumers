@@ -1,8 +1,8 @@
 const consumerNameKey="cappeto_consumer_name";
 function getConsumerName(){
-  const first=localStorage.getItem("cappeto_first_name")||"";
-  const last=localStorage.getItem("cappeto_last_name")||"";
-  return [first,last].filter(Boolean).join(" ")||localStorage.getItem(consumerNameKey)||localStorage.getItem("cappeto_nickname")||"Consumer";
+  const first=sessionStorage.getItem("cappeto_first_name")||"";
+  const last=sessionStorage.getItem("cappeto_last_name")||"";
+  return [first,last].filter(Boolean).join(" ")||localStorage.getItem(consumerNameKey)||sessionStorage.getItem("cappeto_nickname")||"Consumer";
 }
 function paintConsumer(){
   if(!customerSignedIn())return;
@@ -82,17 +82,17 @@ function syncPreferences(){
 function fillSettings(){
   if(!customerSignedIn())return;
   const values={
-    settingsEmail:localStorage.getItem("cappeto_consumer_email")||sessionStorage.getItem("cappeto_consumer_email")||"",
-    alternateEmail:localStorage.getItem("cappeto_alternate_email")||"",
-    settingsFirstName:localStorage.getItem("cappeto_first_name")||"",
-    settingsLastName:localStorage.getItem("cappeto_last_name")||"",
-    settingsAddress:localStorage.getItem("cappeto_address")||"",
-    settingsZip:localStorage.getItem("cappeto_zip")||"",
-    settingsPhone:localStorage.getItem("cappeto_phone")||"",
-    settingsNickname:localStorage.getItem("cappeto_nickname")||""
+    settingsEmail:sessionStorage.getItem("cappeto_consumer_email")||sessionStorage.getItem("cappeto_consumer_email")||"",
+    alternateEmail:sessionStorage.getItem("cappeto_alternate_email")||"",
+    settingsFirstName:sessionStorage.getItem("cappeto_first_name")||"",
+    settingsLastName:sessionStorage.getItem("cappeto_last_name")||"",
+    settingsAddress:sessionStorage.getItem("cappeto_address")||"",
+    settingsZip:sessionStorage.getItem("cappeto_zip")||"",
+    settingsPhone:sessionStorage.getItem("cappeto_phone")||"",
+    settingsNickname:sessionStorage.getItem("cappeto_nickname")||""
   };
   Object.entries(values).forEach(([id,value])=>document.getElementById(id).value=value);
-  document.getElementById("settingsMfa").checked=localStorage.getItem("cappeto_mfa_preference")==="true";
+  document.getElementById("settingsMfa").checked=sessionStorage.getItem("cappeto_mfa_preference")==="true";
   syncPreferences();
 }
 function saveSettings(event){
@@ -108,9 +108,9 @@ function saveSettings(event){
     const value=document.getElementById(id).value.trim();
     if(value)localStorage.setItem(key,value);else localStorage.removeItem(key);
   });
-  localStorage.setItem("cappeto_mfa_preference",String(document.getElementById("settingsMfa").checked));
+  sessionStorage.setItem("cappeto_mfa_preference",String(document.getElementById("settingsMfa").checked));
   const picture=document.getElementById("settingsPicture").files[0];
-  if(picture)localStorage.setItem("cappeto_picture_name",picture.name);
+  if(picture)sessionStorage.setItem("cappeto_picture_name",picture.name);
   const fullName=[document.getElementById("settingsFirstName").value.trim(),document.getElementById("settingsLastName").value.trim()].filter(Boolean).join(" ");
   if(fullName)localStorage.setItem(consumerNameKey,fullName);
   paintConsumer();
@@ -142,7 +142,7 @@ document.getElementById("headerTheme").addEventListener("click",toggleTheme);
 document.getElementById("settingsForm").addEventListener("submit",saveSettings);
 document.getElementById("removePicture").addEventListener("click",()=>{
   document.getElementById("settingsPicture").value="";
-  localStorage.removeItem("cappeto_picture_name");
+  sessionStorage.removeItem("cappeto_picture_name");
   toast(language==="es"?"Foto eliminada":"Picture removed");
 });
 document.getElementById("resetPassword").onclick=()=>toast(language==="es"?"Se requiere el servicio seguro de autenticación":"Secure authentication service required");
