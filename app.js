@@ -1,5 +1,5 @@
 const DEMO_SESSION_KEY="cappeto_consumer_demo_session";
-function customerSignedIn(){return sessionStorage.getItem(DEMO_SESSION_KEY)==="active"}
+function customerSignedIn(){return false}
 function updateCustomerSession(){
   const active=customerSignedIn(),es=language==="es";
   document.querySelector(".topbar")?.classList.toggle("is-authenticated",active);
@@ -78,14 +78,18 @@ function productMatches(product,query){
   const words=searchable.split(" ");
   return normalizedQuery.split(" ").every(token=>words.some(word=>looselyMatches(token,word)));
 }
-async function loadProducts(){try{const r=await fetch(CATALOG_URL,{cache:"no-store"});if(!r.ok)throw 0;const d=await r.json();products=Array.isArray(d.products)?d.products:fallback}catch{products=fallback}products=products.filter(p=>p&&p.imageUrl&&Number.isFinite(p.priceCents)).map(p=>({...p,imageUrl:p.imageUrl.startsWith("http")?p.imageUrl:ASSET_BASE+p.imageUrl}));filterProducts();renderBag();updateCustomerSession()}
+async function loadProducts(){try{const r=await fetch(CATALOG_URL,{cache:"no-store"});if(!r.ok)throw 0;const d=await r.json();products=Array.isArray(d.products)?d.products:fallback}catch{products=fallback}products=products.filter(p=>p&&p.imageUrl&&Number.isFinite(p.priceCents)).map(p=>{
+  const candidate=p.imageUrl.startsWith("http")?new URL(p.imageUrl,location.href):new URL(ASSET_BASE+p.imageUrl,location.href);
+  if(candidate.protocol!=="https:"||candidate.origin!=="https://unike0dd.github.io")return null;
+  return{...p,imageUrl:candidate.href};
+}).filter(Boolean);filterProducts();renderBag();updateCustomerSession()}
 function filterProducts(){const q=$("#search").value;filtered=products.filter(product=>productMatches(product,q));renderProducts()}
 function renderProducts(){$("#results").textContent=`${filtered.length} ${language==="es"?"productos":"products"}`;$("#grid").innerHTML=filtered.length?filtered.map(p=>`<article class="card"><div class="picture"><img src="${p.imageUrl}" alt="${esc(p.name)}" loading="lazy" width="640" height="640"></div><div class="card-body"><h3>${esc(p.name)}</h3><div class="card-bottom"><strong class="price">${money(p.priceCents)}</strong><button class="add" data-add="${esc(p.id)}" type="button">${copy[language].add}</button></div></div></article>`).join(""):`<p class="empty">${copy[language].empty}</p>`}
 function add(id){const p=products.find(x=>x.id===id);if(!p)return;bag[id]=Math.min((bag[id]||0)+1,99);saveBag();toast(copy[language].added)}
 function saveBag(){localStorage.setItem("cappeto-bag",JSON.stringify(bag));renderBag()}
 function renderBag(){const rows=Object.entries(bag).map(([id,q])=>[products.find(p=>p.id===id),q]).filter(([p,q])=>p&&q>0);$("#bagCount").textContent=rows.reduce((n,[,q])=>n+q,0);$("#bagLines").innerHTML=rows.length?rows.map(([p,q])=>`<div class="bag-line"><img src="${p.imageUrl}" alt=""><div><h3>${esc(p.name)}</h3><div class="quantity"><button data-minus="${esc(p.id)}" aria-label="Remove one">−</button><span>${q}</span><button data-plus="${esc(p.id)}" aria-label="Add one">+</button></div></div><b>${money(p.priceCents*q)}</b></div>`).join(""):`<p class="empty">${copy[language].emptyBag}</p>`;const subtotal=rows.reduce((n,[p,q])=>n+p.priceCents*q,0),vat=0,delivery=0;$("#subtotal").textContent=money(subtotal);$("#vat").textContent=money(vat);$("#delivery").textContent=money(delivery);$("#total").textContent=money(subtotal+vat+delivery)}
 function setDrawer(open){$("#drawer").classList.toggle("open",open);$("#scrim").classList.toggle("show",open);$("#drawer").setAttribute("aria-hidden",String(!open));if(open)$("#closeBag").focus()}
-function setLanguage(){document.documentElement.lang=language;document.querySelectorAll("[data-copy]").forEach(el=>el.innerHTML=copy[language][el.dataset.copy]);filterProducts();renderBag()}
+function setLanguage(){document.documentElement.lang=language;document.querySelectorAll("[data-copy]").forEach(el=>el.textContent=copy[language][el.dataset.copy]);filterProducts();renderBag()}
 function setTheme(t){document.documentElement.dataset.theme=t;localStorage.setItem("cappeto-theme",t)}
 function esc(v){return String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 let toastTimer;function toast(msg){$("#toast").textContent=msg;$("#toast").classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>$("#toast").classList.remove("show"),1800)}
