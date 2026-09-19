@@ -82,7 +82,7 @@ function syncPreferences(){
 function fillSettings(){
   if(!customerSignedIn())return;
   const values={
-    settingsEmail:sessionStorage.getItem("cappeto_consumer_email")||sessionStorage.getItem("cappeto_consumer_email")||"",
+    settingsEmail:sessionStorage.getItem("cappeto_consumer_email")||"",
     alternateEmail:sessionStorage.getItem("cappeto_alternate_email")||"",
     settingsFirstName:sessionStorage.getItem("cappeto_first_name")||"",
     settingsLastName:sessionStorage.getItem("cappeto_last_name")||"",

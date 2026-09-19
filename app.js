@@ -16,9 +16,9 @@ function updateCustomerSession(){
   document.getElementById("customerLabel")?.toggleAttribute("hidden",!active);
   document.getElementById("menuButton")?.toggleAttribute("hidden",!active);
   document.getElementById("carouselLabel")?.toggleAttribute("hidden",!active);
-  document.getElementById("navProductSearch")?.toggleAttribute("hidden",!active);
+  document.getElementById("navProductSearch")?.removeAttribute("hidden");
   document.getElementById("categoryDrawer")?.toggleAttribute("hidden",!active);
-  if(active&&!localStorage.getItem("cappeto_consumer_name"))document.getElementById("customerLabel").textContent=es?"Consumidor":"Consumer";
+  if(active&&!sessionStorage.getItem("cappeto_consumer_name"))document.getElementById("customerLabel").textContent=es?"Consumidor":"Consumer";
   if(!active){
     const drawer=document.getElementById("categoryDrawer");
     drawer?.classList.remove("open");
@@ -84,7 +84,8 @@ function productMatches(product,query){
   return normalizedQuery.split(" ").every(token=>words.some(word=>looselyMatches(token,word)));
 }
 async function loadProducts(){try{const r=await fetch(CATALOG_URL,{cache:"no-store"});if(!r.ok)throw 0;const d=await r.json();products=Array.isArray(d.products)?d.products:fallback}catch{products=fallback}products=products.filter(p=>p&&p.imageUrl&&Number.isFinite(p.priceCents)).map(p=>{
-  const candidate=p.imageUrl.startsWith("http")?new URL(p.imageUrl,location.href):new URL(ASSET_BASE+p.imageUrl,location.href);
+  let candidate;
+  try{candidate=p.imageUrl.startsWith("http")?new URL(p.imageUrl,location.href):new URL(ASSET_BASE+p.imageUrl,location.href)}catch{return null}
   if(candidate.protocol!=="https:"||candidate.origin!=="https://unike0dd.github.io")return null;
   return{...p,imageUrl:candidate.href};
 }).filter(Boolean);filterProducts();renderBag();updateCustomerSession()}

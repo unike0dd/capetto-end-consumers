@@ -19,9 +19,9 @@ function secure(response, request) {
   headers.delete("X-XSS-Protection");
   const path = new URL(request.url).pathname;
   const contentType = headers.get("Content-Type") || "";
-  if (contentType.includes("text/html") || path.endsWith("/login.html")) {
-    headers.set("Cache-Control", "no-store");
-  } else if (path === "/.well-known/asset-manifest.json" || path === "/.well-known/security.txt") {
+  if (response.status >= 400 || path.startsWith("/api/") || path === "/__security/reports" ||
+      contentType.includes("text/html") || path.endsWith("/login.html") ||
+      path === "/.well-known/asset-manifest.json" || path === "/.well-known/security.txt") {
     headers.set("Cache-Control", "no-store");
   } else {
     headers.set("Cache-Control", "public, max-age=3600");
@@ -39,7 +39,9 @@ export default {
     }
     if (url.pathname === "/__security/reports") {
       if (method !== "POST") return secure(new Response("Method Not Allowed", {status: 405}), request);
-      const length = Number(request.headers.get("Content-Length") || 0);
+      const lengthHeader = request.headers.get("Content-Length");
+      if (!lengthHeader || !/^\d+$/.test(lengthHeader)) return secure(new Response("Length Required", {status: 411}), request);
+      const length = Number(lengthHeader);
       if (length > 32768) return secure(new Response("Payload Too Large", {status: 413}), request);
       const type = request.headers.get("Content-Type") || "";
       if (!type.includes("application/reports+json") && !type.includes("application/csp-report")) {
@@ -53,9 +55,7 @@ export default {
     if (url.pathname.startsWith("/api/")) {
       return secure(Response.json({error: "trusted_backend_not_connected"}, {status: 503}), request);
     }
-    if (!["GET", "HEAD"].includes(method)) {
-      return secure(new Response("Method Not Allowed", {status: 405}), request);
-    }
+    if (!["GET", "HEAD"].includes(method)) return secure(new Response("Method Not Allowed", {status: 405}), request);
     return secure(await env.ASSETS.fetch(request), request);
   }
 };
