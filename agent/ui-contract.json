@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "locales": ["en", "es"],
+  "modes": ["standard", "conversational"],
+  "states": [
+    "idle",
+    "asking",
+    "showing_response_and_results",
+    "reviewing_cart_mutation",
+    "awaiting_explicit_confirmation",
+    "creating_checkout",
+    "provider_authorization",
+    "showing_order_status",
+    "handoff",
+    "error"
+  ],
+  "requirements": {
+    "standardShoppingAlwaysAvailable": true,
+    "separateConversationAndProductResults": true,
+    "visibleFinalTotalsOutsideConversation": true,
+    "explicitConfirmationBeforeCartMutation": true,
+    "explicitConfirmationBeforeCheckout": true,
+    "silentSubstitutionAllowed": false,
+    "rawPaymentDataInClientStorageAllowed": false,
+    "accessibleLiveRegionForMessages": true,
+    "focusMovesAutomatically": false
+  }
+}

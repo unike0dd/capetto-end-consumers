@@ -1,13 +1,13 @@
 const consumerNameKey="cappeto_consumer_name";
 function getConsumerName(){
-  const first=localStorage.getItem("cappeto_first_name")||"";
-  const last=localStorage.getItem("cappeto_last_name")||"";
-  return [first,last].filter(Boolean).join(" ")||localStorage.getItem(consumerNameKey)||localStorage.getItem("cappeto_nickname")||"Consumer";
+  const first=sessionStorage.getItem("cappeto_first_name")||"";
+  const last=sessionStorage.getItem("cappeto_last_name")||"";
+  return [first,last].filter(Boolean).join(" ")||sessionStorage.getItem(consumerNameKey)||sessionStorage.getItem("cappeto_nickname")||"Consumer";
 }
 function paintConsumer(){
   if(!customerSignedIn())return;
   const name=getConsumerName();
-  localStorage.setItem(consumerNameKey,name);
+  sessionStorage.setItem(consumerNameKey,name);
   document.getElementById("customerLabel").textContent=name;
   document.getElementById("splashConsumer")?.replaceChildren(document.createTextNode(name));
 }
@@ -40,7 +40,7 @@ function updateCarouselButtons(){
 }
 renderProducts=function(){
   document.getElementById("results").textContent=filtered.length+" "+copy[language].available;
-  document.getElementById("grid").innerHTML=filtered.length?filtered.map((p,index)=>`<article class="card"><div class="picture"><img src="${p.imageUrl}" alt="${esc(p.name)}" loading="${index<2?"eager":"lazy"}" decoding="async" width="900" height="900">${Number.isFinite(p.stock)?`<span class="stock">${p.stock} ${copy[language].available}</span>`:""}</div><div class="card-body">${p.category?`<span class="category">${esc(p.category)}</span>`:""}<h3>${esc(p.name)}</h3>${p.description?`<p class="description">${esc(p.description)}</p>`:""}<div class="card-bottom"><strong class="price">${money(p.priceCents)}</strong><div class="product-controls"><button data-remove="${esc(p.id)}" type="button" aria-label="Remove ${esc(p.name)}">−</button><output class="product-quantity" data-qty="${esc(p.id)}" aria-label="Quantity">${bag[p.id]||0}</output><button class="add" data-add="${esc(p.id)}" type="button" aria-label="Add ${esc(p.name)}">+</button></div></div></div></article>`).join(""):`<p class="empty">${copy[language].empty}</p>`;
+  document.getElementById("grid").innerHTML=filtered.length?filtered.map((p,index)=>`<article class="card"><div class="picture"><img src="${esc(p.imageUrl)}" alt="${esc(p.name)}" loading="${index<2?"eager":"lazy"}" decoding="async" width="900" height="900">${Number.isFinite(p.stock)?`<span class="stock">${p.stock} ${copy[language].available}</span>`:""}</div><div class="card-body">${p.category?`<span class="category">${esc(p.category)}</span>`:""}<h3>${esc(p.name)}</h3>${p.description?`<p class="description">${esc(p.description)}</p>`:""}<div class="card-bottom"><strong class="price">${money(p.priceCents)}</strong><div class="product-controls"><button data-remove="${esc(p.id)}" type="button" aria-label="Remove ${esc(p.name)}">−</button><output class="product-quantity" data-qty="${esc(p.id)}" aria-label="Quantity">${bag[p.id]||0}</output><button class="add" data-add="${esc(p.id)}" type="button" aria-label="Add ${esc(p.name)}">+</button></div></div></div></article>`).join(""):`<p class="empty">${copy[language].empty}</p>`;
   requestAnimationFrame(updateCarouselButtons);
 };
 function syncProductQuantities(){document.querySelectorAll("[data-qty]").forEach(el=>el.textContent=bag[el.dataset.qty]||0)}
@@ -82,17 +82,17 @@ function syncPreferences(){
 function fillSettings(){
   if(!customerSignedIn())return;
   const values={
-    settingsEmail:localStorage.getItem("cappeto_consumer_email")||sessionStorage.getItem("cappeto_consumer_email")||"",
-    alternateEmail:localStorage.getItem("cappeto_alternate_email")||"",
-    settingsFirstName:localStorage.getItem("cappeto_first_name")||"",
-    settingsLastName:localStorage.getItem("cappeto_last_name")||"",
-    settingsAddress:localStorage.getItem("cappeto_address")||"",
-    settingsZip:localStorage.getItem("cappeto_zip")||"",
-    settingsPhone:localStorage.getItem("cappeto_phone")||"",
-    settingsNickname:localStorage.getItem("cappeto_nickname")||""
+    settingsEmail:sessionStorage.getItem("cappeto_consumer_email")||"",
+    alternateEmail:sessionStorage.getItem("cappeto_alternate_email")||"",
+    settingsFirstName:sessionStorage.getItem("cappeto_first_name")||"",
+    settingsLastName:sessionStorage.getItem("cappeto_last_name")||"",
+    settingsAddress:sessionStorage.getItem("cappeto_address")||"",
+    settingsZip:sessionStorage.getItem("cappeto_zip")||"",
+    settingsPhone:sessionStorage.getItem("cappeto_phone")||"",
+    settingsNickname:sessionStorage.getItem("cappeto_nickname")||""
   };
   Object.entries(values).forEach(([id,value])=>document.getElementById(id).value=value);
-  document.getElementById("settingsMfa").checked=localStorage.getItem("cappeto_mfa_preference")==="true";
+  document.getElementById("settingsMfa").checked=sessionStorage.getItem("cappeto_mfa_preference")==="true";
   syncPreferences();
 }
 function saveSettings(event){
@@ -106,13 +106,13 @@ function saveSettings(event){
   };
   Object.entries(mappings).forEach(([id,key])=>{
     const value=document.getElementById(id).value.trim();
-    if(value)localStorage.setItem(key,value);else localStorage.removeItem(key);
+    if(value)sessionStorage.setItem(key,value);else sessionStorage.removeItem(key);
   });
-  localStorage.setItem("cappeto_mfa_preference",String(document.getElementById("settingsMfa").checked));
+  sessionStorage.setItem("cappeto_mfa_preference",String(document.getElementById("settingsMfa").checked));
   const picture=document.getElementById("settingsPicture").files[0];
-  if(picture)localStorage.setItem("cappeto_picture_name",picture.name);
+  if(picture)sessionStorage.setItem("cappeto_picture_name",picture.name);
   const fullName=[document.getElementById("settingsFirstName").value.trim(),document.getElementById("settingsLastName").value.trim()].filter(Boolean).join(" ");
-  if(fullName)localStorage.setItem(consumerNameKey,fullName);
+  if(fullName)sessionStorage.setItem(consumerNameKey,fullName);
   paintConsumer();
   toast(language==="es"?"Configuración guardada":"Settings saved");
 }
@@ -142,7 +142,7 @@ document.getElementById("headerTheme").addEventListener("click",toggleTheme);
 document.getElementById("settingsForm").addEventListener("submit",saveSettings);
 document.getElementById("removePicture").addEventListener("click",()=>{
   document.getElementById("settingsPicture").value="";
-  localStorage.removeItem("cappeto_picture_name");
+  sessionStorage.removeItem("cappeto_picture_name");
   toast(language==="es"?"Foto eliminada":"Picture removed");
 });
 document.getElementById("resetPassword").onclick=()=>toast(language==="es"?"Se requiere el servicio seguro de autenticación":"Secure authentication service required");
