@@ -112,3 +112,28 @@
     padding-inline: .45rem;
   }
 }
+
+
+/* Keep public navigation aligned in one row at every viewport */
+@media (max-width: 600px) {
+  .public-header {
+    position: relative;
+    grid-template-columns: minmax(3.5rem, 1fr) auto minmax(0, 1fr);
+    grid-template-areas: "action brand controls";
+    gap: .3rem;
+    min-height: 4.5rem;
+    padding: .55rem .65rem;
+  }
+  .public-header__action { grid-area: action; grid-column: auto; align-self: center; justify-self: start; font-size: .72rem; white-space: nowrap; }
+  .public-header .public-header__brand { grid-area: brand; grid-column: auto; align-self: center; justify-self: center; font-size: 1rem; }
+  .public-header__controls { grid-area: controls; grid-column: auto; justify-self: end; flex-wrap: nowrap; gap: .2rem; }
+  .public-header__preferences { flex-wrap: nowrap; gap: .2rem; }
+  .public-header__button { min-width: 2.35rem; min-height: 2.5rem; padding: .35rem .42rem; font-size: .72rem; }
+}
+@media (max-width: 360px) {
+  .public-header { grid-template-columns: minmax(3.35rem, 1fr) auto minmax(0, 1fr); gap: .2rem; padding-inline: .45rem; }
+  .public-header__action { font-size: .68rem; }
+  .public-header .public-header__brand { font-size: .92rem; }
+  .public-header__controls,.public-header__preferences { gap: .12rem; }
+  .public-header__button { min-width: 2.2rem; min-height: 2.4rem; padding-inline: .32rem; font-size: .68rem; }
+}

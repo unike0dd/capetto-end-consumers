@@ -28,13 +28,13 @@
 <title>Cappeto · Order your favorites</title>
 <link rel="stylesheet" href="styles.css?v=layout-7">
 <link rel="stylesheet" href="adaptive.css?v=layout-7">
-<link rel="stylesheet" href="storefront.css?v=header-preferences-20">
+<link rel="stylesheet" href="storefront.css?v=header-preferences-21">
 <link rel="stylesheet" href="splash.css?v=reflow-13">
-<link rel="stylesheet" href="public-header.css?v=shared-header-1">
+<link rel="stylesheet" href="public-header.css?v=shared-header-2">
 <script src="adaptive.js?v=layout-7" defer></script>
 <script src="public-i18n.js?v=shared-i18n-1" defer></script>
 <script src="app.js?v=shared-i18n-1" defer></script>
-<script src="storefront.js?v=header-preferences-20" defer></script>
+<script src="storefront.js?v=header-preferences-21" defer></script>
 <script src="splash.js?v=reflow-13" defer></script>
 </head>
 <body>
@@ -74,8 +74,11 @@
   <p class="eyebrow nav-carousel-label auth-private" id="carouselLabel" data-i18n="localBusiness" hidden>YOUR LOCAL FOOD BUSINESS</p>
   <a class="public-brand public-header__brand" id="publicBrand" href="./" data-i18n-aria-label="homeLabel" aria-label="Cappeto home">Cappeto</a>
   <strong class="consumer-title auth-private" id="customerLabel" hidden></strong>
-  <label class="search nav-product-search auth-private" id="navProductSearch" hidden><span aria-hidden="true">⌕</span><input id="search" type="search" data-i18n-placeholder="searchPlaceholder" placeholder="Search Cappeto" data-i18n-aria-label="searchLabel" aria-label="Search products"></label>
   <div class="header-fabs public-header__controls">
+    <div class="nav-product-search public-search auth-private" id="navProductSearch" hidden>
+      <button class="search-toggle" id="searchToggle" type="button" data-i18n-aria-label="searchLabel" aria-label="Search products" aria-controls="searchPanel" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg><span class="sr-only" data-i18n="searchLabel">Search products</span></button>
+      <label class="search search-panel" id="searchPanel" hidden><span aria-hidden="true">⌕</span><input id="search" type="search" data-i18n-placeholder="searchPlaceholder" placeholder="Search Cappeto" data-i18n-aria-label="searchLabel" aria-label="Search products"></label>
+    </div>
     <div class="header-preferences public-header__preferences" role="group" data-i18n-aria-label="languageGroup" aria-label="Language and appearance">
       <button class="plain header-preference public-header__button" id="headerLanguage" data-language-control type="button" aria-pressed="false">EN</button>
       <button class="plain header-preference public-header__button" id="headerTheme" data-theme-control type="button" aria-pressed="false">Light</button>
@@ -87,7 +90,6 @@
 <section class="public-landing" id="publicLanding" aria-labelledby="publicLandingTitle">
   <p class="eyebrow" data-i18n="welcomeTo">WELCOME TO CAPPETO</p>
   <h1 id="publicLandingTitle" data-i18n="landingTitle">Fresh local favorites, ready when you are.</h1>
-  <p data-i18n="landingCopy">Browse the menu freely. Sign in when you are ready to manage your personal settings and continue your customer experience.</p>
   <div class="public-landing-actions"><a class="primary" href="login.html" data-i18n="signIn">Sign in</a><a class="plain" href="login.html#register" data-i18n="createAccount">Create account</a></div>
 </section>
 <main id="storefrontContent">
