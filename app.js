@@ -4,7 +4,7 @@ function purgeLegacyPrivateStorage(){
   for(const key of LEGACY_PRIVATE_KEYS)localStorage.removeItem(key);
 }
 
-function customerSignedIn(){return false}
+function customerSignedIn(){return sessionStorage.getItem(DEMO_SESSION_KEY)==="preview"}
 function updateCustomerSession(){
   const active=customerSignedIn(),es=language==="es";
   document.querySelector(".topbar")?.classList.toggle("is-authenticated",active);
