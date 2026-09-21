@@ -25,6 +25,8 @@ $("#create").addEventListener("click", () => setMessage("registration"));
 $("#googleLogin").addEventListener("click", () => setMessage("provider"));
 $("#phoneLogin").addEventListener("click", () => setMessage("provider"));
 $("#previewCustomer").addEventListener("click", () => {
+  const previewKeys=[DEMO_SESSION_KEY,"cappeto_consumer_email","cappeto_alternate_email","cappeto_first_name","cappeto_last_name","cappeto_address","cappeto_zip","cappeto_phone","cappeto_nickname","cappeto_picture_name","cappeto_mfa_preference","cappeto_consumer_name","cappeto_consumer_initial","cappeto_splash_seen"];
+  for(const key of previewKeys){sessionStorage.removeItem(key);} 
   sessionStorage.setItem(DEMO_SESSION_KEY, "preview");
   sessionStorage.setItem("cappeto_consumer_name", i18n.text("previewCustomerName"));
   location.href = "./";
