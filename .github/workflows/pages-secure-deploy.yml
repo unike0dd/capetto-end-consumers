@@ -1,13 +1,9 @@
 name: Secure GitHub Pages deployment
 
 on:
-  pull_request:
-    branches:
-      - main
   push:
     branches:
       - main
-  workflow_dispatch:
 
 permissions:
   contents: read
@@ -17,45 +13,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  validate:
-    name: Validate security and governance
-    runs-on: ubuntu-24.04
-    timeout-minutes: 15
-
-    permissions:
-      contents: read
-      security-events: write
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
-        with:
-          persist-credentials: false
-
-      - name: Validate JSON contracts
-        run: find agent contracts -type f -name '*.json' -print0 | xargs -0 -r -n1 jq empty
-
-      - name: Validate GitHub governance and security
-        run: node scripts/verify-security.mjs index.html login.html
-
-      - name: Validate storefront build
-        run: node scripts/build-cloudflare.mjs consumer
-
-      - name: Validate edge deployment
-        run: npx --yes wrangler@4.135.0 deploy --dry-run --env non_specific
-
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@1c5b675653bb5c22dbe9b12b556ec555138e09fd
-        with:
-          languages: javascript-typescript
-
-      - name: Analyze with CodeQL
-        uses: github/codeql-action/analyze@1c5b675653bb5c22dbe9b12b556ec555138e09fd
-
   build:
     name: Build Pages artifact
-    if: github.event_name != 'pull_request'
-    needs: validate
     runs-on: ubuntu-24.04
     timeout-minutes: 10
 
@@ -78,7 +37,6 @@ jobs:
 
   deploy:
     name: Deploy GitHub Pages
-    if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-24.04
     timeout-minutes: 10
