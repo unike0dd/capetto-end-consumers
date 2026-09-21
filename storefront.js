@@ -121,5 +121,17 @@ document.getElementById("updatePassword").onclick=()=>{
 };
 document.getElementById("fingerprintButton").onclick=()=>toast(language==="es"?"La biometría requiere autenticación segura":"Biometrics require secure authentication");
 document.getElementById("faceprintButton").onclick=()=>toast(language==="es"?"La biometría requiere autenticación segura":"Biometrics require secure authentication");
-document.addEventListener("keydown",event=>{if(event.key==="Escape"){setPanel("menu",false);setPanel("bag",false)}});
+function setSearchOpen(open){
+  const toggle=document.getElementById("searchToggle"),panel=document.getElementById("searchPanel"),input=document.getElementById("search");
+  if(!toggle||!panel)return;
+  panel.toggleAttribute("hidden",!open);
+  toggle.setAttribute("aria-expanded",String(open));
+  if(open)requestAnimationFrame(()=>input?.focus());
+}
+document.getElementById("searchToggle")?.addEventListener("click",event=>{
+  event.stopPropagation();
+  setSearchOpen(event.currentTarget.getAttribute("aria-expanded")!=="true");
+});
+document.addEventListener("click",event=>{if(!event.target.closest(".public-search"))setSearchOpen(false)});
+document.addEventListener("keydown",event=>{if(event.key==="Escape"){setPanel("menu",false);setPanel("bag",false);setSearchOpen(false)}});
 if(customerSignedIn()){paintConsumer();fillSettings()}else{syncPreferences()}
