@@ -22,45 +22,50 @@
 <link rel="canonical" href="https://unike0dd.github.io/capetto-end-consumers/login.html">
 <title>Cappeto · Customer sign in</title>
 <link rel="stylesheet" href="login.css?v=auth-boundary-3">
+<link rel="stylesheet" href="public-header.css?v=shared-header-1">
 <link rel="stylesheet" href="adaptive.css?v=adaptive-1">
 <script src="adaptive.js?v=adaptive-1" defer></script>
-<script src="login.js?v=auth-boundary-3" defer></script>
+<script src="public-i18n.js?v=shared-i18n-1" defer></script>
+<script src="login.js?v=shared-i18n-1" defer></script>
 </head>
 <body>
-<a class="skip" href="#loginCard" data-i18n="skip">Skip to sign in</a>
-<header>
-<a class="brand" href="./" aria-label="Cappeto home"><span>C</span><strong>Cappeto</strong></a>
-<div class="preferences" aria-label="Display preferences">
-<button id="language" type="button" aria-pressed="false" aria-label="Cambiar a español">EN</button>
-<button id="theme" type="button" aria-pressed="false" aria-label="Switch to dark mode">Light</button>
-</div>
+<a class="skip" href="#loginCard" data-i18n="skipSignIn">Skip to sign in</a>
+<header class="public-header">
+  <a class="public-header__action" href="./" data-i18n="storefront">Storefront</a>
+  <a class="public-header__brand" href="./" data-i18n-aria-label="homeLabel" aria-label="Cappeto home">Cappeto</a>
+  <div class="public-header__controls">
+    <div class="public-header__preferences" role="group" data-i18n-aria-label="languageGroup" aria-label="Language and appearance">
+      <button class="public-header__button" data-language-control id="language" type="button" aria-pressed="false">EN</button>
+      <button class="public-header__button" data-theme-control id="theme" type="button" aria-pressed="false">Light</button>
+    </div>
+  </div>
 </header>
 <main>
 <section class="welcome" aria-labelledby="welcomeTitle">
-<div class="photo"><img src="https://unike0dd.github.io/cappeto/assets/products/04-cappeto-cafe-mocha.webp" alt="Cappeto café mocha" fetchpriority="high"></div>
+<div class="photo"><img src="https://unike0dd.github.io/cappeto/assets/products/04-cappeto-cafe-mocha.webp" data-i18n-alt="mochaAlt" alt="Cappeto café mocha" fetchpriority="high"></div>
 <div class="welcome-copy">
-<p class="eyebrow" data-i18n="eyebrow">WELCOME BACK</p>
-<h1 id="welcomeTitle">Your Cappeto favorites are waiting.</h1>
+<p class="eyebrow" data-i18n="welcomeBack">WELCOME BACK</p>
+<h1 id="welcomeTitle" data-i18n="welcomeTitle">Your Cappeto favorites are waiting.</h1>
 <p data-i18n="welcomeCopy">Sign in to review your bag, save favorites, and enjoy a quicker checkout when customer accounts become available.</p>
 </div>
 </section>
 <section class="panel">
 <form class="card" id="loginCard" novalidate>
-<div class="heading"><p class="eyebrow" data-i18n="account">CUSTOMER ACCOUNT</p><h2 data-i18n="signIn">Sign in</h2><p data-i18n="instruction">Enter the email and password connected to your account.</p></div>
-<label><span data-i18n="email">Email address</span><input id="email" name="email" type="email" autocomplete="username" inputmode="email" required placeholder="you@example.com"></label>
-<label><span data-i18n="password">Password</span><span class="password"><input id="password" name="password" type="password" autocomplete="current-password" minlength="8" required placeholder="Enter your password"><button id="showPassword" type="button" data-i18n="show" aria-label="Show password">Show</button></span></label>
+<div class="heading"><p class="eyebrow" data-i18n="customerAccount">CUSTOMER ACCOUNT</p><h2 data-i18n="signIn">Sign in</h2><p data-i18n="instruction">Enter the email and password connected to your account.</p></div>
+<label><span data-i18n="email">Email address</span><input id="email" name="email" type="email" autocomplete="username" inputmode="email" required data-i18n-placeholder="unavailablePlaceholder" placeholder="Unavailable"></label>
+<label><span data-i18n="password">Password</span><span class="password"><input id="password" name="password" type="password" autocomplete="current-password" minlength="8" required data-i18n-placeholder="unavailablePlaceholder" placeholder="Unavailable"><button id="showPassword" type="button" data-i18n="show" aria-label="Show password">Show</button></span></label>
 <div class="options"><span class="session-note" data-i18n="sessionOnly">For your protection, sign-in lasts for this browser session only.</span><button class="text" id="forgot" type="button" data-i18n="forgot">Forgot password?</button></div>
 <p class="message" id="message" role="status" aria-live="polite"></p>
 <button class="primary" type="submit" data-i18n="continue">Continue</button>
 <div class="divider provider-divider"><span data-i18n="continueWith">CONTINUE WITH</span></div>
-<div class="provider-options" aria-label="Other sign-in methods">
+<div class="provider-options" data-i18n-aria-label="otherMethods" aria-label="Other sign-in methods">
   <button class="provider" id="googleLogin" type="button"><span class="provider-mark google-mark" aria-hidden="true">G</span><span data-i18n="google">Google</span></button>
-  <button class="provider" id="phoneLogin" type="button"><span class="provider-mark" aria-hidden="true">☎</span><span data-i18n="phone">Phone Number</span></button>
+  <button class="provider" id="phoneLogin" type="button"><span class="provider-mark" aria-hidden="true">☎</span><span data-i18n="phone">Phone number</span></button>
 </div>
-<button class="secondary" id="create" type="button" data-i18n="create">Create a customer account</button>
-<p class="browse"><span data-i18n="noAccount">Just browsing?</span> <a href="./" data-i18n="menu">Continue to the menu</a></p>
+<button class="secondary" id="create" type="button" data-i18n="createCustomer">Create a customer account</button>
+<p class="browse"><span data-i18n="justBrowsing">Just browsing?</span> <a href="./" data-i18n="continueMenu">Continue to the menu</a></p>
 </form>
 </section>
 </main>
-<footer><span>© 2026 Cappeto</span><a href="./" data-i18n="back">Back to menu</a></footer>
+<footer><span>© 2026 Cappeto</span><a href="./" data-i18n="backMenu">Back to menu</a></footer>
 </body></html>

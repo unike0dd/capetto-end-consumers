@@ -23,7 +23,7 @@ function setPanel(type,open){
   panel.classList.toggle("open",open);
   panel.setAttribute("aria-hidden",String(!open));
   button.setAttribute("aria-expanded",String(open));
-  button.setAttribute("aria-label",open?(isSettings?"Close configuration":"Close shopping bag"):(isSettings?"Open configuration":"Open shopping bag"));
+  button.setAttribute("aria-label",open?(isSettings?"Close configuration":window.CappetoI18n.text("bagClose")):(isSettings?"Open configuration":window.CappetoI18n.text("bagOpen")));
   document.getElementById("scrim").classList.toggle("show",open);
   document.body.style.overflow=open?"hidden":"";
   if(open)(isSettings?document.getElementById("closeMenu"):document.getElementById("closeBag")).focus();
@@ -40,7 +40,7 @@ function updateCarouselButtons(){
 }
 renderProducts=function(){
   document.getElementById("results").textContent=filtered.length+" "+copy[language].available;
-  document.getElementById("grid").innerHTML=filtered.length?filtered.map((p,index)=>`<article class="card"><div class="picture"><img src="${esc(p.imageUrl)}" alt="${esc(p.name)}" loading="${index<2?"eager":"lazy"}" decoding="async" width="900" height="900">${Number.isFinite(p.stock)?`<span class="stock">${p.stock} ${copy[language].available}</span>`:""}</div><div class="card-body">${p.category?`<span class="category">${esc(p.category)}</span>`:""}<h3>${esc(p.name)}</h3>${p.description?`<p class="description">${esc(p.description)}</p>`:""}<div class="card-bottom"><strong class="price">${money(p.priceCents)}</strong><div class="product-controls"><button data-remove="${esc(p.id)}" type="button" aria-label="Remove ${esc(p.name)}">−</button><output class="product-quantity" data-qty="${esc(p.id)}" aria-label="Quantity">${bag[p.id]||0}</output><button class="add" data-add="${esc(p.id)}" type="button" aria-label="Add ${esc(p.name)}">+</button></div></div></div></article>`).join(""):`<p class="empty">${copy[language].empty}</p>`;
+  document.getElementById("grid").innerHTML=filtered.length?filtered.map((p,index)=>{const name=window.CappetoI18n.productName(p);return `<article class="card"><div class="picture"><img src="${esc(p.imageUrl)}" alt="${esc(name)}" loading="${index<2?"eager":"lazy"}" decoding="async" width="900" height="900">${Number.isFinite(p.stock)?`<span class="stock">${p.stock} ${copy[language].available}</span>`:""}</div><div class="card-body">${p.category?`<span class="category">${esc(p.category)}</span>`:""}<h3>${esc(name)}</h3>${p.description?`<p class="description">${esc(p.description)}</p>`:""}<div class="card-bottom"><strong class="price">${money(p.priceCents)}</strong><div class="product-controls"><button data-remove="${esc(p.id)}" type="button" aria-label="${copy[language].removeOne}: ${esc(name)}">−</button><output class="product-quantity" data-qty="${esc(p.id)}" aria-label="${copy[language].quantity}">${bag[p.id]||0}</output><button class="add" data-add="${esc(p.id)}" type="button" aria-label="${copy[language].addOne}: ${esc(name)}">+</button></div></div></div></article>`}).join(""):`<p class="empty">${copy[language].empty}</p>`;
   requestAnimationFrame(updateCarouselButtons);
 };
 function syncProductQuantities(){document.querySelectorAll("[data-qty]").forEach(el=>el.textContent=bag[el.dataset.qty]||0)}
@@ -61,24 +61,7 @@ function activateChevron(button,direction){
   moveProduct(direction);
   setTimeout(()=>button.classList.remove("is-clicked"),420);
 }
-function syncPreferences(){
-  const es=language==="es";
-  const theme=document.documentElement.dataset.theme||"light";
-  const languageButton=document.getElementById("footerLanguage");
-  const themeButton=document.getElementById("footerTheme");
-  const headerLanguage=document.getElementById("headerLanguage");
-  const headerTheme=document.getElementById("headerTheme");
-  languageButton.querySelector("span").textContent=es?"Idioma":"Language";
-  languageButton.querySelector("strong").textContent=es?"ES":"EN";
-  languageButton.setAttribute("aria-label",es?"Switch to English":"Cambiar a español");
-  themeButton.querySelector("span").textContent=es?"Tema":"Theme";
-  themeButton.querySelector("strong").textContent=theme==="dark"?(es?"Oscuro":"Dark"):(es?"Claro":"Light");
-  themeButton.setAttribute("aria-label",theme==="dark"?(es?"Cambiar a modo claro":"Switch to light mode"):(es?"Cambiar a modo oscuro":"Switch to dark mode"));
-  headerLanguage.textContent=es?"ES":"EN";
-  headerLanguage.setAttribute("aria-label",es?"Switch to English":"Cambiar a español");
-  headerTheme.textContent=theme==="dark"?(es?"Oscuro":"Dark"):(es?"Claro":"Light");
-  headerTheme.setAttribute("aria-label",theme==="dark"?(es?"Cambiar a modo claro":"Switch to light mode"):(es?"Cambiar a modo oscuro":"Switch to dark mode"));
-}
+function syncPreferences(){ window.CappetoI18n.render(); }
 function fillSettings(){
   if(!customerSignedIn())return;
   const values={
@@ -125,20 +108,6 @@ document.getElementById("closeMenu").onclick=()=>setPanel("menu",false);
 document.getElementById("bagButton").onclick=()=>setPanel("bag",true);
 document.getElementById("closeBag").onclick=()=>setPanel("bag",false);
 document.getElementById("scrim").onclick=()=>{setPanel("menu",false);setPanel("bag",false)};
-const toggleLanguage=()=>{
-  language=language==="en"?"es":"en";
-  localStorage.setItem("cappeto-language",language);
-  setLanguage();
-  syncPreferences();
-};
-const toggleTheme=()=>{
-  setTheme(document.documentElement.dataset.theme==="dark"?"light":"dark");
-  syncPreferences();
-};
-document.getElementById("footerLanguage").addEventListener("click",toggleLanguage);
-document.getElementById("headerLanguage").addEventListener("click",toggleLanguage);
-document.getElementById("footerTheme").addEventListener("click",toggleTheme);
-document.getElementById("headerTheme").addEventListener("click",toggleTheme);
 document.getElementById("settingsForm").addEventListener("submit",saveSettings);
 document.getElementById("removePicture").addEventListener("click",()=>{
   document.getElementById("settingsPicture").value="";
