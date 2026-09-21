@@ -1,3 +1,4 @@
+const DEMO_SESSION_KEY = "cappeto_consumer_demo_session";
 const i18n = window.CappetoI18n;
 const $ = selector => document.querySelector(selector);
 const showMessage = key => { $("#message").textContent = i18n.text(key); };
@@ -23,6 +24,11 @@ $("#forgot").addEventListener("click", () => setMessage("recovery"));
 $("#create").addEventListener("click", () => setMessage("registration"));
 $("#googleLogin").addEventListener("click", () => setMessage("provider"));
 $("#phoneLogin").addEventListener("click", () => setMessage("provider"));
+$("#previewCustomer").addEventListener("click", () => {
+  sessionStorage.setItem(DEMO_SESSION_KEY, "preview");
+  sessionStorage.setItem("cappeto_consumer_name", i18n.text("previewCustomerName"));
+  location.href = "./";
+});
 $("#loginCard").addEventListener("submit", event => {
   event.preventDefault();
   $("#email").value = "";
