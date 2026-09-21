@@ -1,0 +1,30 @@
+/* Shared public-header placement. Page-specific styles own color and typography. */
+.public-header .public-header__brand {
+  grid-column: 2;
+}
+
+@media (max-width:600px) {
+  .public-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "brand controls"
+      "auth auth";
+  }
+
+  .public-header .public-header__brand {
+    grid-area: brand;
+    grid-column: auto;
+    min-width: 0;
+    justify-self: start;
+  }
+
+  .public-header .public-header__controls {
+    grid-area: controls;
+    justify-self: end;
+  }
+
+  .public-header .public-header__auth {
+    grid-area: auth;
+  }
+}

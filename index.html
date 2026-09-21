@@ -30,6 +30,7 @@
 <link rel="stylesheet" href="adaptive.css?v=layout-7">
 <link rel="stylesheet" href="storefront.css?v=header-preferences-20">
 <link rel="stylesheet" href="splash.css?v=reflow-13">
+<link rel="stylesheet" href="public-header.css?v=review-28">
 <script src="adaptive.js?v=layout-7" defer></script>
 <script src="app.js?v=bag-totals-18" defer></script>
 <script src="storefront.js?v=header-preferences-20" defer></script>
@@ -67,13 +68,13 @@
     <button class="splash-skip" id="skipSplash" type="button">Skip welcome</button>
   </section>
 </div>
-<header class="topbar">
-  <div class="public-auth-actions" id="publicAuthActions"><a class="plain" href="login.html">Sign in</a></div>
+<header class="topbar public-header">
+  <div class="public-auth-actions public-header__auth" id="publicAuthActions"><a class="plain" href="login.html">Sign in</a></div>
   <p class="eyebrow nav-carousel-label auth-private" id="carouselLabel" data-copy="eyebrow" hidden>YOUR LOCAL FOOD BUSINESS</p>
-  <strong class="public-brand" id="publicBrand">Cappeto</strong>
+  <strong class="public-brand public-header__brand" id="publicBrand">Cappeto</strong>
   <strong class="consumer-title auth-private" id="customerLabel" hidden></strong>
   <label class="search nav-product-search auth-private" id="navProductSearch" hidden><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Search Cappeto" aria-label="Search products"></label>
-  <div class="header-fabs">
+  <div class="header-fabs public-header__controls">
     <div class="header-preferences" role="group" aria-label="Language and appearance">
       <button class="plain header-preference" id="headerLanguage" type="button" aria-label="Cambiar a español">EN</button>
       <button class="plain header-preference" id="headerTheme" type="button" aria-label="Switch to dark mode">Light</button>
