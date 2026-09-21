@@ -1,6 +1,6 @@
 /* Shared public-header placement. Page-specific styles own color and typography. */
 .public-header .public-header__brand {
-  grid-column: 2;
+  grid-column: auto;
 }
 
 @media (max-width:600px) {
