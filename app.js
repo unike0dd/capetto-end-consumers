@@ -94,7 +94,13 @@ function filterProducts(){const q=$("#search").value;filtered=products.filter(pr
 function renderProducts(){$("#results").textContent=`${filtered.length} ${language==="es"?"productos":"products"}`;$("#grid").innerHTML=filtered.length?filtered.map(p=>`<article class="card"><div class="picture"><img src="${p.imageUrl}" alt="${esc(p.name)}" loading="lazy" width="640" height="640"></div><div class="card-body"><h3>${esc(p.name)}</h3><div class="card-bottom"><strong class="price">${money(p.priceCents)}</strong><button class="add" data-add="${esc(p.id)}" type="button">${copy[language].add}</button></div></div></article>`).join(""):`<p class="empty">${copy[language].empty}</p>`}
 function add(id){const p=products.find(x=>x.id===id);if(!p)return;bag[id]=Math.min((bag[id]||0)+1,99);saveBag();toast(copy[language].added)}
 function saveBag(){localStorage.setItem("cappeto-bag",JSON.stringify(bag));renderBag()}
-function renderBag(){const rows=Object.entries(bag).map(([id,q])=>[products.find(p=>p.id===id),q]).filter(([p,q])=>p&&q>0);$("#bagCount").textContent=rows.reduce((n,[,q])=>n+q,0);$("#bagLines").innerHTML=rows.length?rows.map(([p,q])=>`<div class="bag-line"><img src="${p.imageUrl}" alt=""><div><h3>${esc(p.name)}</h3><div class="quantity"><button data-minus="${esc(p.id)}" aria-label="${copy[language].removeOne}">−</button><span>${q}</span><button data-plus="${esc(p.id)}" aria-label="${copy[language].addOne}">+</button></div></div><b>${money(p.priceCents*q)}</b></div>`).join(""):`<p class="empty">${copy[language].emptyBag}</p>`;const subtotal=rows.reduce((n,[p,q])=>n+p.priceCents*q,0),vat=0,delivery=0;$("#subtotal").textContent=money(subtotal);$("#vat").textContent=money(vat);$("#delivery").textContent=money(delivery);$("#total").textContent=money(subtotal+vat+delivery)}
+function clearBag(){
+  Object.keys(bag).forEach(id=>delete bag[id]);
+  saveBag();
+  toast(window.CappetoI18n.text("clearedBag"));
+  document.getElementById("clearBag")?.focus();
+}
+function renderBag(){const rows=Object.entries(bag).map(([id,q])=>[products.find(p=>p.id===id),q]).filter(([p,q])=>p&&q>0);$("#bagCount").textContent=rows.reduce((n,[,q])=>n+q,0);const clearButton=document.getElementById("clearBag");if(clearButton)clearButton.disabled=rows.length===0;$("#bagLines").innerHTML=rows.length?rows.map(([p,q])=>`<div class="bag-line"><img src="${p.imageUrl}" alt=""><div><h3>${esc(p.name)}</h3><div class="quantity"><button data-minus="${esc(p.id)}" aria-label="${copy[language].removeOne}">−</button><span>${q}</span><button data-plus="${esc(p.id)}" aria-label="${copy[language].addOne}">+</button></div></div><b>${money(p.priceCents*q)}</b></div>`).join(""):`<p class="empty">${copy[language].emptyBag}</p>`;const subtotal=rows.reduce((n,[p,q])=>n+p.priceCents*q,0),vat=0,delivery=0;$("#subtotal").textContent=money(subtotal);$("#vat").textContent=money(vat);$("#delivery").textContent=money(delivery);$("#total").textContent=money(subtotal+vat+delivery)}
 function setDrawer(open){$("#drawer").classList.toggle("open",open);$("#scrim").classList.toggle("show",open);$("#drawer").setAttribute("aria-hidden",String(!open));if(open)$("#closeBag").focus()}
 function setLanguage(){language=window.CappetoI18n.language;window.CappetoI18n.render();filterProducts();renderBag();document.title=window.CappetoI18n.text("titleHome")}
 function setTheme(t){window.CappetoI18n.setTheme(t)}
@@ -104,6 +110,7 @@ let toastTimer;function toast(msg){$("#toast").textContent=msg;$("#toast").class
 $("#grid").addEventListener("click",e=>{const b=e.target.closest("[data-add]");if(b)add(b.dataset.add)});
 $("#bagLines").addEventListener("click",e=>{const plus=e.target.closest("[data-plus]"),minus=e.target.closest("[data-minus]");if(plus)add(plus.dataset.plus);if(minus){bag[minus.dataset.minus]--;if(bag[minus.dataset.minus]<=0)delete bag[minus.dataset.minus];saveBag()}});
 document.getElementById("search")?.addEventListener("input",filterProducts);
+document.getElementById("clearBag")?.addEventListener("click",clearBag);
 document.getElementById("signOut").onclick=()=>{
   sessionStorage.removeItem(DEMO_SESSION_KEY);
   sessionStorage.removeItem("cappeto_consumer_email");
