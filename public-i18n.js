@@ -25,7 +25,8 @@
       otherMethods: "Other sign-in methods", mochaAlt: "Cappeto café mocha", homeLabel: "Cappeto home",
       recovery: "Password recovery requires the trusted customer identity service.", registration: "Account creation requires the trusted customer identity service.",
       provider: "This sign-in provider requires the trusted identity service.", unavailable: "Sign-in is disabled until the trusted identity service is connected.",
-      titleHome: "Cappeto · Order your favorites", titleLogin: "Cappeto · Sign in unavailable"
+      previewCustomer: "Preview customer account", previewCustomerNotice: "Preview access is session-only and is not production authentication.", previewCustomerName: "Preview customer",
+      titleHome: "Cappeto · Order your favorites", titleLogin: "Cappeto · Sign in preview"
     },
     es: {
       skipProducts: "Ir a los productos", skipSignIn: "Ir al inicio de sesión", storefront: "Tienda",
@@ -48,7 +49,8 @@
       otherMethods: "Otros métodos de inicio de sesión", mochaAlt: "Moca de Cappeto", homeLabel: "Inicio de Cappeto",
       recovery: "La recuperación de contraseña requiere el servicio confiable de identidad del cliente.", registration: "La creación de cuentas requiere el servicio confiable de identidad del cliente.",
       provider: "Este proveedor de acceso requiere el servicio confiable de identidad.", unavailable: "El inicio de sesión está deshabilitado hasta que se conecte el servicio confiable de identidad.",
-      titleHome: "Cappeto · Pide tus favoritos", titleLogin: "Cappeto · Inicio de sesión no disponible"
+      previewCustomer: "Vista previa de la cuenta del cliente", previewCustomerNotice: "El acceso de vista previa existe solo durante esta sesión y no es autenticación de producción.", previewCustomerName: "Cliente de prueba",
+      titleHome: "Cappeto · Pide tus favoritos", titleLogin: "Cappeto · Vista previa de inicio de sesión"
     }
   };
 
