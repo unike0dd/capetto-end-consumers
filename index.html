@@ -30,13 +30,15 @@
 <link rel="stylesheet" href="adaptive.css?v=layout-7">
 <link rel="stylesheet" href="storefront.css?v=header-preferences-20">
 <link rel="stylesheet" href="splash.css?v=reflow-13">
+<link rel="stylesheet" href="public-header.css?v=shared-header-1">
 <script src="adaptive.js?v=layout-7" defer></script>
-<script src="app.js?v=bag-totals-18" defer></script>
+<script src="public-i18n.js?v=shared-i18n-1" defer></script>
+<script src="app.js?v=shared-i18n-1" defer></script>
 <script src="storefront.js?v=header-preferences-20" defer></script>
 <script src="splash.js?v=reflow-13" defer></script>
 </head>
 <body>
-<a class="skip" href="#products">Skip to products</a>
+<a class="skip" href="#products" data-i18n="skipProducts">Skip to products</a>
 <div class="splash-screen" id="splashScreen" aria-hidden="true" hidden>
   <div class="splash-grid" id="splashGrid" aria-hidden="true"></div>
   <section class="splash-welcome" id="splashWelcome" role="dialog" aria-modal="true" aria-labelledby="splashMainTitle">
@@ -67,43 +69,43 @@
     <button class="splash-skip" id="skipSplash" type="button">Skip welcome</button>
   </section>
 </div>
-<header class="topbar">
-  <div class="public-auth-actions" id="publicAuthActions"><a class="plain" href="login.html">Sign in</a></div>
-  <p class="eyebrow nav-carousel-label auth-private" id="carouselLabel" data-copy="eyebrow" hidden>YOUR LOCAL FOOD BUSINESS</p>
-  <strong class="public-brand" id="publicBrand">Cappeto</strong>
+<header class="topbar public-header">
+  <div class="public-auth-actions public-header__action" id="publicAuthActions"><a class="plain" href="login.html" data-i18n="signIn">Sign in</a></div>
+  <p class="eyebrow nav-carousel-label auth-private" id="carouselLabel" data-i18n="localBusiness" hidden>YOUR LOCAL FOOD BUSINESS</p>
+  <a class="public-brand public-header__brand" id="publicBrand" href="./" data-i18n-aria-label="homeLabel" aria-label="Cappeto home">Cappeto</a>
   <strong class="consumer-title auth-private" id="customerLabel" hidden></strong>
-  <label class="search nav-product-search auth-private" id="navProductSearch" hidden><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Search Cappeto" aria-label="Search products"></label>
-  <div class="header-fabs">
-    <div class="header-preferences" role="group" aria-label="Language and appearance">
-      <button class="plain header-preference" id="headerLanguage" type="button" aria-label="Cambiar a español">EN</button>
-      <button class="plain header-preference" id="headerTheme" type="button" aria-label="Switch to dark mode">Light</button>
+  <label class="search nav-product-search auth-private" id="navProductSearch" hidden><span aria-hidden="true">⌕</span><input id="search" type="search" data-i18n-placeholder="searchPlaceholder" placeholder="Search Cappeto" data-i18n-aria-label="searchLabel" aria-label="Search products"></label>
+  <div class="header-fabs public-header__controls">
+    <div class="header-preferences public-header__preferences" role="group" data-i18n-aria-label="languageGroup" aria-label="Language and appearance">
+      <button class="plain header-preference public-header__button" id="headerLanguage" data-language-control type="button" aria-pressed="false">EN</button>
+      <button class="plain header-preference public-header__button" id="headerTheme" data-theme-control type="button" aria-pressed="false">Light</button>
     </div>
-    <button class="fab bag" id="bagButton" type="button" aria-label="Open shopping bag"><svg class="bag-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.8 8.5h10.4l1 11H5.8l1-11Z"/><path d="M9 9V6.8a3 3 0 0 1 6 0V9"/></svg><span class="sr-only">Shopping bag</span><b id="bagCount">0</b></button>
+    <button class="fab bag" id="bagButton" type="button" data-i18n-aria-label="bagOpen" aria-label="Open shopping bag" aria-expanded="false"><svg class="bag-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.8 8.5h10.4l1 11H5.8l1-11Z"/><path d="M9 9V6.8a3 3 0 0 1 6 0V9"/></svg><span class="sr-only" data-i18n="shoppingBag">Shopping bag</span><b id="bagCount">0</b></button>
     <button class="fab settings-button auth-private" id="menuButton" hidden type="button" aria-label="Open configuration" aria-controls="categoryDrawer" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6 1.7 1.7 0 0 0-.4 1.1V21H9.6v-.1A1.7 1.7 0 0 0 8.5 19.4a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-.6-1 1.7 1.7 0 0 0-1.1-.4H3V9.6h.1A1.7 1.7 0 0 0 4.6 8.5a1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.83-2.83.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-.6 1.7 1.7 0 0 0 .4-1.1V3h4v.1A1.7 1.7 0 0 0 15.5 4.6a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 19.4 9c.38.25.7.6.88 1 .14.32.2.68.2 1.03V13c0 .35-.07.7-.2 1.03-.18.4-.5.75-.88.97Z"/></svg><span class="sr-only">Configuration</span></button>
   </div>
 </header>
 <section class="public-landing" id="publicLanding" aria-labelledby="publicLandingTitle">
-  <p class="eyebrow">WELCOME TO CAPPETO</p>
-  <h1 id="publicLandingTitle">Fresh local favorites, ready when you are.</h1>
-  <p>Browse the menu freely. Sign in when you are ready to manage your personal settings and continue your customer experience.</p>
-  <div class="public-landing-actions"><a class="primary" href="login.html">Sign in</a><a class="plain" href="login.html#register">Create account</a></div>
+  <p class="eyebrow" data-i18n="welcomeTo">WELCOME TO CAPPETO</p>
+  <h1 id="publicLandingTitle" data-i18n="landingTitle">Fresh local favorites, ready when you are.</h1>
+  <p data-i18n="landingCopy">Browse the menu freely. Sign in when you are ready to manage your personal settings and continue your customer experience.</p>
+  <div class="public-landing-actions"><a class="primary" href="login.html" data-i18n="signIn">Sign in</a><a class="plain" href="login.html#register" data-i18n="createAccount">Create account</a></div>
 </section>
 <main id="storefrontContent">
   <section class="menu" id="products" aria-labelledby="carouselLabel">
     <p class="results" id="results" role="status"></p>
-    <div class="carousel-shell"><button class="carousel-arrow previous" id="previousProduct" type="button" aria-label="Previous product"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg></button><div class="grid" id="grid" aria-live="polite" tabindex="0"></div><button class="carousel-arrow next" id="nextProduct" type="button" aria-label="Next product"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 6 6 6-6 6"/></svg></button></div>
+    <div class="carousel-shell"><button class="carousel-arrow previous" id="previousProduct" type="button" data-i18n-aria-label="previousProduct" aria-label="Previous product"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg></button><div class="grid" id="grid" aria-live="polite" tabindex="0"></div><button class="carousel-arrow next" id="nextProduct" type="button" data-i18n-aria-label="nextProduct" aria-label="Next product"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 6 6 6-6 6"/></svg></button></div>
   </section>
 </main>
 <aside class="drawer" id="drawer" aria-hidden="true" aria-labelledby="bagTitle">
-  <div class="drawer-head"><div><p class="eyebrow" data-copy="yourOrder">YOUR ORDER</p><h2 id="bagTitle" data-copy="bagTitle">Your bag</h2></div><button class="close" id="closeBag" aria-label="Close order">×</button></div>
+  <div class="drawer-head"><div><p class="eyebrow" data-i18n="yourOrder">YOUR ORDER</p><h2 id="bagTitle" data-i18n="bagTitle">Your bag</h2></div><button class="close" id="closeBag" data-i18n-aria-label="closeOrder" aria-label="Close order">×</button></div>
   <div class="bag-lines" id="bagLines"></div>
   <div class="totals">
-    <p><span data-copy="subtotal">Subtotal</span><b id="subtotal">$0.00</b></p>
-    <p><span data-copy="vat">VAT</span><b id="vat">$0.00</b></p>
-    <p><span data-copy="delivery">Delivery</span><b id="delivery">$0.00</b></p>
-    <p class="total"><span data-copy="total">Total</span><b id="total">$0.00</b></p>
+    <p><span data-i18n="subtotal">Subtotal</span><b id="subtotal">$0.00</b></p>
+    <p><span data-i18n="vat">VAT</span><b id="vat">$0.00</b></p>
+    <p><span data-i18n="delivery">Delivery</span><b id="delivery">$0.00</b></p>
+    <p class="total"><span data-i18n="total">Total</span><b id="total">$0.00</b></p>
   </div>
-  <button class="primary checkout" id="checkout" data-copy="checkout">Continue to checkout</button>
+  <button class="primary checkout" id="checkout" data-i18n="checkout">Continue to checkout</button>
 </aside>
 <aside class="category-drawer settings-drawer auth-private" id="categoryDrawer" hidden aria-hidden="true" aria-labelledby="categoryTitle">
   <div class="drawer-head"><div><p class="eyebrow" id="browseLabel">ACCOUNT</p><h1 id="categoryTitle">Configuration</h1></div><button class="close" id="closeMenu" aria-label="Close configuration">×</button></div>
@@ -129,5 +131,5 @@
 </aside>
 <div class="scrim" id="scrim"></div>
 <div class="toast" id="toast" role="status"></div>
-<footer><strong class="footer-brand">Cappeto</strong><p data-copy="footer">Freshly prepared local favorites.</p><small>© 2026 Cappeto</small></footer>
+<footer><strong class="footer-brand">Cappeto</strong><p data-i18n="footer">Freshly prepared local favorites.</p><small>© 2026 Cappeto</small></footer>
 </body></html>

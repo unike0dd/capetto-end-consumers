@@ -1,6 +1,9 @@
 name: Secure GitHub Pages deployment
 
 on:
+  pull_request:
+    branches:
+      - main
   push:
     branches:
       - main
@@ -51,6 +54,7 @@ jobs:
 
   build:
     name: Build Pages artifact
+    if: github.event_name != 'pull_request'
     needs: validate
     runs-on: ubuntu-24.04
     timeout-minutes: 10
@@ -74,6 +78,7 @@ jobs:
 
   deploy:
     name: Deploy GitHub Pages
+    if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-24.04
     timeout-minutes: 10
