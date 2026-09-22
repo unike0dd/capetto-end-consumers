@@ -1,10 +1,15 @@
 const DEMO_SESSION_KEY="cappeto_consumer_demo_session";
-const LEGACY_PRIVATE_KEYS=["cappeto_consumer_email","cappeto_alternate_email","cappeto_first_name","cappeto_last_name","cappeto_address","cappeto_zip","cappeto_phone","cappeto_nickname","cappeto_picture_name","cappeto_mfa_preference","cappeto_consumer_name"];
+const PREVIEW_SESSION_KEYS=[DEMO_SESSION_KEY,"cappeto_consumer_email","cappeto_alternate_email","cappeto_first_name","cappeto_last_name","cappeto_address","cappeto_zip","cappeto_phone","cappeto_nickname","cappeto_picture_name","cappeto_mfa_preference","cappeto_consumer_name","cappeto_consumer_initial","cappeto_splash_seen"];
+const LEGACY_PRIVATE_KEYS=[...PREVIEW_SESSION_KEYS.slice(1),"cappeto_consumer_name"];
 function purgeLegacyPrivateStorage(){
   for(const key of LEGACY_PRIVATE_KEYS)localStorage.removeItem(key);
 }
+function clearPreviewState(){
+  for(const key of PREVIEW_SESSION_KEYS)sessionStorage.removeItem(key);
+  for(const key of PREVIEW_SESSION_KEYS)localStorage.removeItem(key);
+}
 
-function customerSignedIn(){return false}
+function customerSignedIn(){return sessionStorage.getItem(DEMO_SESSION_KEY)==="preview"}
 function updateCustomerSession(){
   const active=customerSignedIn(),es=language==="es";
   document.querySelector(".topbar")?.classList.toggle("is-authenticated",active);
@@ -112,11 +117,7 @@ $("#bagLines").addEventListener("click",e=>{const plus=e.target.closest("[data-p
 document.getElementById("search")?.addEventListener("input",filterProducts);
 document.getElementById("clearBag")?.addEventListener("click",clearBag);
 document.getElementById("signOut").onclick=()=>{
-  sessionStorage.removeItem(DEMO_SESSION_KEY);
-  sessionStorage.removeItem("cappeto_consumer_email");
-  sessionStorage.removeItem("cappeto_consumer_initial");
-  sessionStorage.removeItem("cappeto_splash_seen");
-  localStorage.removeItem(DEMO_SESSION_KEY);
+  clearPreviewState();
   location.reload();
 };$("#checkout").onclick=()=>toast(copy[language].checkoutMsg);document.addEventListener("keydown",e=>{if(e.key==="Escape")setDrawer(false)});
 if(!customerSignedIn())purgeLegacyPrivateStorage();updateCustomerSession();setLanguage();document.addEventListener("cappeto:languagechange",setLanguage);loadProducts();

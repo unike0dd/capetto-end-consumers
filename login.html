@@ -25,8 +25,8 @@
 <link rel="stylesheet" href="public-header.css?v=shared-header-2">
 <link rel="stylesheet" href="adaptive.css?v=adaptive-1">
 <script src="adaptive.js?v=adaptive-1" defer></script>
-<script src="public-i18n.js?v=shared-i18n-1" defer></script>
-<script src="login.js?v=shared-i18n-1" defer></script>
+<script src="public-i18n.js?v=preview-session-1" defer></script>
+<script src="login.js?v=preview-session-1" defer></script>
 </head>
 <body>
 <a class="skip" href="#loginCard" data-i18n="skipSignIn">Skip to sign in</a>
@@ -57,6 +57,8 @@
 <div class="options options-single"><button class="text" id="forgot" type="button" data-i18n="forgot">Forgot password?</button></div>
 <p class="message" id="message" role="status" aria-live="polite"></p>
 <button class="primary" type="submit" data-i18n="continue">Continue</button>
+<button class="secondary" id="previewCustomer" type="button" data-i18n="previewCustomer">Preview customer account</button>
+<p class="session-note" data-i18n="previewCustomerNotice">Preview access is session-only and is not production authentication.</p>
 <div class="divider provider-divider"><span data-i18n="continueWith">CONTINUE WITH</span></div>
 <div class="provider-options" data-i18n-aria-label="otherMethods" aria-label="Other sign-in methods">
   <button class="provider" id="googleLogin" type="button"><span class="provider-mark google-mark" aria-hidden="true">G</span><span data-i18n="google">Google</span></button>
