@@ -89,7 +89,7 @@ Every card displays a consistently aligned step number and offers **Continue / C
 
 - **Continue** advances one card. On the language card it switches to ES if needed; on the appearance card it switches to Dark if needed. The last card says **Finish / Terminar**.
 - **Skip tutorial** immediately ends the walkthrough.
-- On first completion, close any drawer, clear items selected during the walkthrough, and show an empty dashboard. Later cart selections are not cleared on reload.
+- On first completion, close any drawer, restore the bag to its pre-tutorial quantities so existing selections are preserved, and show an empty dashboard. Later cart selections are not cleared on reload.
 - The final prompt is **What are you looking for? / ¿Qué estás buscando?**. It sits beside the highlighted magnifying glass when room permits, or below on narrow screens. A search reveals matching products and catalog seller names when available.
 
 ## Preview boundaries
