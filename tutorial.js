@@ -20,7 +20,7 @@
     { target: ".card .add", title: ["Select items", "Selecciona artículos"], body: ["Use + on a product to add one. Use − to remove one. The number beside them and the shopping bag update together.", "Usa + en un producto para agregar uno. Usa − para quitar uno. El número junto a ellos y la bolsa se actualizan a la vez."] }
   ];
   const firstPanelStep = steps.findIndex(step => step.panel);
-  let index = 0, active = false, overlay, spotlight, card, empty, hint;
+  let index = 0, active = false, overlay, spotlight, card, empty, hint, initialBag;
   const t = pair => pair[i18n.language === "es" ? 1 : 0];
   const byId = id => document.getElementById(id);
 
@@ -143,7 +143,11 @@
     setPanel("bag", false);
     const firstCompletion = sessionStorage.getItem(KEY) !== "true";
     sessionStorage.setItem(KEY, "true");
-    if (firstCompletion && typeof clearBag === "function" && Object.keys(bag).length) clearBag();
+    if (firstCompletion && initialBag) {
+      Object.keys(bag).forEach(id => delete bag[id]);
+      Object.assign(bag, initialBag);
+      saveBag();
+    }
     byId("search").value = "";
     filterProducts();
     document.body.classList.add("tutorial-search-ready");
@@ -158,6 +162,7 @@
     if (!customerSignedIn() || active) return;
     makeUI();
     if (sessionStorage.getItem(KEY) === "true") { finish(); return; }
+    initialBag = {...bag};
     active = true;
     index = 0;
     overlay.hidden = false;
